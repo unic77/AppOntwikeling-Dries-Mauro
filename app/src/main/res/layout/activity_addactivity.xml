@@ -20,13 +20,13 @@
 
             <ImageView
                 android:id="@+id/imageTopOfInfoPage"
+                android:src="@drawable/noimageselected"
                 android:layout_width="331dp"
                 android:layout_height="186dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@color/purple_200"
-                tools:srcCompat="@tools:sample/backgrounds/scenic[1]" />
+                tools:srcCompat="@drawable/noimageselected" />
 
             <Button
                 android:id="@+id/btnAddImage"

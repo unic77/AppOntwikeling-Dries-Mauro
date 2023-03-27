@@ -1,26 +1,17 @@
 package com.example.appdriesenmauro
 
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Build
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.CalendarView.OnDateChangeListener
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
-import kotlin.time.Duration.Companion.days
 
 
-class AddActivityFragment(activityFragmentIn: ActivityFragment,mainActivity: MainActivity): Fragment(R.layout.activity_addactivity) {
+class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity): Fragment(R.layout.activity_addactivity) {
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn

@@ -14,17 +14,32 @@ class ActivityFragment : Fragment(R.layout.fragment_activity) {
 
     private lateinit var binding : FragmentActivityBinding
     private var sampleActivityItems = ArrayList<Activity>()
-
-    private var adapter= ActivityAdapter(sampleActivityItems)
+    private var favoriteActivityItems = ArrayList<Activity>()
+    private lateinit var adapter: ActivityAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentActivityBinding.inflate(layoutInflater)
         var main = activity as MainActivity
-
+        adapter = ActivityAdapter(sampleActivityItems,this)
         binding.rvwAcivity.adapter = adapter
         binding.rvwAcivity.layoutManager = LinearLayoutManager(this.context)
-
         return binding.root
+    }
+
+    fun switchFiewToHome(){
+        adapter.setItems(sampleActivityItems)
+        adapter.notifyDataSetChanged()
+    }
+    fun switchFiewToFavorite(){
+        adapter.setItems(favoriteActivityItems)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun addFavorite(activity: Activity){
+        if(!favoriteActivityItems.contains(activity)) {
+            favoriteActivityItems.add(activity)
+        }
+        else return
     }
 
     fun addActivity(activity: Activity){
