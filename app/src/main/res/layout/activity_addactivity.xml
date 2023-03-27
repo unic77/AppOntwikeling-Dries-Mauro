@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageTopOfInfoPage"
+                android:layout_width="331dp"
+                android:layout_height="186dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@color/purple_200"
+                tools:srcCompat="@tools:sample/backgrounds/scenic[1]" />
+
+            <Button
+                android:id="@+id/btnAddImage"
+                android:layout_width="200dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="add image" />
+
+            <EditText
+                android:id="@+id/txtNameEvent"
+                android:layout_width="309dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name event" />
+
+
+            <DatePicker
+                android:id="@+id/eventDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:layout_gravity="center_horizontal"
+                android:datePickerMode="calendar" />
+
+            <EditText
+                android:id="@+id/txtContextEvent"
+                android:layout_width="349dp"
+                android:layout_height="122dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:scrollHorizontally="false"
+                android:text="tell us a bit more about the event" />
+
+            <Button
+                android:id="@+id/btnPublishEvent"
+                android:layout_width="423dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:text="Publisch event" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id= "@+id/mnuFavourites"
+        android:title="Favourites" />
+
+    <item
+        android:id= "@+id/mnuAddActivity"
+        android:title="Add activity" />
+
+    <item
+        android:id= "@+id/mnuGoToSupportPage"
+        android:title="Support" />
+
+</menu>
