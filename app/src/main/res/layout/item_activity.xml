@@ -48,6 +48,7 @@
         android:layout_width="107dp"
         android:layout_height="103dp"
         android:background="#000000"
+        android:scaleType="fitXY"
         android:maxHeight="103dp"
         android:maxWidth="107dp"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage2"
@@ -78,5 +79,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage"
         app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/btnAddToFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="add to favorite"
+        app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/rectimage"
+        app:layout_constraintTop_toBottomOf="@+id/activityImageItem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

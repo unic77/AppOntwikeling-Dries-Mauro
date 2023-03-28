@@ -3,11 +3,8 @@ package com.example.appdriesenmauro
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -50,13 +47,18 @@ private fun setupLoginActivity(){
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.mnuAddActivity -> goTOAddActivity()
+                R.id.mnuHome -> goToHome()
                 R.id.mnuFavourites -> goToFavourites()
+                R.id.mnuAddActivity -> goTOAddActivity()
                 R.id.mnuGoToSupportPage -> gotToSupport()
             }
             true
         }
 
+    }
+
+    private fun goToHome() {
+        activityFragment.switchFiewToHome()
     }
 
     private fun gotToSupport(){
@@ -65,12 +67,14 @@ private fun setupLoginActivity(){
     }
 
     private fun goToFavourites(){
-        var snak = Snackbar.make(binding.root, "favourites not online", Snackbar.LENGTH_LONG)
-        snak.show()
+        activityFragment.switchFiewToFavorite()
     }
 
     private fun goTOAddActivity(){
-        var addActivityFragment = AddActivityFragment(activityFragment,this);
+        /*var intent = Intent(this, AddActivityActivity::class.java)
+        startActivity(intent)*/ // vragen of dit nu een activity is of een fragment
+
+        var addActivityFragment = AddActivityActivity(activityFragment,this);
         switchTo(addActivityFragment)
     }
 
