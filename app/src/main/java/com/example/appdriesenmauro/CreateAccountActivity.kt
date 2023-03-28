@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appdriesenmauro.databinding.ActivityCreateAccountBinding
 
-class createAccountActivity: AppCompatActivity() {
+class CreateAccountActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateAccountBinding
 
