@@ -6,6 +6,4 @@ import com.example.appdriesenmauro.databinding.ActivityLoginBinding
 
 class UserActivity {
 
-
-
 }
