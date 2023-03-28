@@ -20,16 +20,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setupLoginActivity()
         setupActivityListFragment()
         setupMenuDrawer()
         setContentView(binding.root)
     }
-
-private fun setupLoginActivity(){
-    UserActivity()
-    }
-
 
     private fun setupActivityListFragment() {
         supportFragmentManager.beginTransaction().apply {
