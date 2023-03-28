@@ -1,0 +1,8 @@
+Groepje: Mauro Vranckx, Dries Ruttens
+Concept: Evenementen app (voor UHasselt B.V.) die toekomstige evenementen toont met datum en tijd, organisator, afbeelding, extra 			info (zoals prijs voor ticketje).
+		Appart tabblad voor favorieten evenementen. 
+		Alleen bevoegde mensen kunnen een evenement uploaden daarom is er login nodig.
+
+Extraatjes: Vriendenlijst
+		Aanwezigheidscounter
+		

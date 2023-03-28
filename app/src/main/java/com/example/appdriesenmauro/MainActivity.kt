@@ -1,5 +1,6 @@
 package com.example.appdriesenmauro
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -21,10 +22,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        setupLoginActivity()
         setupActivityListFragment()
         setupMenuDrawer()
         setContentView(binding.root)
     }
+
+private fun setupLoginActivity(){
+    UserActivity()
+    }
+
 
     private fun setupActivityListFragment() {
         supportFragmentManager.beginTransaction().apply {
