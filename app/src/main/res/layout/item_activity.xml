@@ -10,8 +10,8 @@
         android:layout_width="330dp"
         android:layout_height="230dp"
         android:layout_marginBottom="64dp"
-        android:maxHeight="230dp"
         android:maxWidth="330dp"
+        android:maxHeight="230dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage"
         app:layout_constraintEnd_toEndOf="@+id/rectimage"
@@ -22,7 +22,7 @@
 
     <ImageView
         android:id="@+id/rectimage"
-        android:layout_width="379dp"
+        android:layout_width="match_parent"
         android:layout_height="126dp"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,11 +35,12 @@
         android:id="@+id/rectimage2"
         android:layout_width="134dp"
         android:layout_height="128dp"
-        android:layout_marginEnd="232dp"
         android:layout_marginBottom="84dp"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage"
         app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="@+id/rectimage"
         app:layout_constraintTop_toTopOf="@+id/activityImageItem"
         app:layout_constraintVertical_bias="1.0"></ImageView>
 
@@ -48,9 +49,9 @@
         android:layout_width="107dp"
         android:layout_height="103dp"
         android:background="#000000"
-        android:scaleType="fitXY"
-        android:maxHeight="103dp"
         android:maxWidth="107dp"
+        android:maxHeight="103dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage2"
         app:layout_constraintEnd_toEndOf="@+id/rectimage2"
         app:layout_constraintStart_toStartOf="@+id/rectimage2"
@@ -73,12 +74,13 @@
         android:id="@+id/dateEventTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="26dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="28dp"
         android:text="Date event"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage"
-        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnAddToFavorite"

@@ -3,6 +3,7 @@ package com.example.appdriesenmauro
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
@@ -57,6 +58,11 @@ private fun setupLoginActivity(){
 
     }
 
+    private fun goToProfile() {
+        var snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)
+        snak.show()
+    }
+
     private fun goToHome() {
         activityFragment.switchFiewToHome()
     }
@@ -76,6 +82,7 @@ private fun setupLoginActivity(){
 
         var addActivityFragment = AddActivityActivity(activityFragment,this);
         switchTo(addActivityFragment)
+        binding.drawerLayout.closeDrawer(Gravity.LEFT)
     }
 
    fun switchTo(fragment: Fragment){
