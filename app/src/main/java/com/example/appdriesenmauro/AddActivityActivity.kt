@@ -38,7 +38,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             pickImage()
         }
 
-
+        //https://www.youtube.com/watch?v=fj-4x2X9Lew&ab_channel=ProgrammingGuru
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
         picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)){
