@@ -42,6 +42,10 @@ class ActivityFragment : Fragment(R.layout.fragment_activity) {
         else return
     }
 
+    fun removeFavorite(activity: Activity){
+        favoriteActivityItems.remove(activity)
+    }
+
     fun addActivity(activity: Activity){
         sampleActivityItems.add(activity)
         adapter.notifyItemInserted(sampleActivityItems.size - 1)

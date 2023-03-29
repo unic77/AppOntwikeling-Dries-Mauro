@@ -3,13 +3,8 @@ package com.example.appdriesenmauro
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.ViewCompat
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import java.text.FieldPosition
 
 class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: ActivityFragment): RecyclerView.Adapter<ActivityAdapter.ActivyViewHolder>() {
     inner class ActivyViewHolder(currentItemView: View): RecyclerView.ViewHolder(currentItemView)
@@ -32,11 +27,14 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             findViewById<TextView>(R.id.nameEventTxt).text = currentActivityItem.title
             findViewById<TextView>(R.id.dateEventTxt).text = currentActivityItem.date
             findViewById<ImageView>(R.id.activityImageItem).setImageURI(currentActivityItem.data?.data)
-            findViewById<Button>(R.id.btnAddToFavorite).setOnClickListener{
-                activityFragment.addFavorite(currentActivityItem)
-                var snak = Snackbar.make(this, "added to favorite", Snackbar.LENGTH_LONG)
-                snak.show()
+            var switch = findViewById<Switch>(R.id.swAddToFavorite)
+            switch.setOnClickListener{
+                when(switch.isChecked){
+                    true -> activityFragment.addFavorite(currentActivityItem)
+                    false -> activityFragment.removeFavorite(currentActivityItem)
+                }
             }
         }
+
     }
 }
