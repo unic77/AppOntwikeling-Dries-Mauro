@@ -1,14 +1,20 @@
 package com.example.appdriesenmauro
 
+import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
+import com.google.android.material.snackbar.Snackbar
+import java.util.Calendar
 
 
 class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity): Fragment(R.layout.activity_addactivity) {
@@ -32,10 +38,21 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             pickImage()
         }
 
+
+        val picker = binding.eventDatePicker
+        val today = Calendar.getInstance()
+        picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)){
+                view, year, month, day ->
+            val month = month+1
+            val toast = "You have selected : $day/$month/$year"
+            date = "$day/$month/$year"
+
+            Snackbar.make(binding.root, toast, Snackbar.LENGTH_LONG).show()
+        }
+
         binding.btnPublishEvent.setOnClickListener{
             var name = binding.txtNameEvent.text.toString()
 
-            date = "10/20/4"
             /*val datePicker = binding.eventDatePicker
             val today = Calendar.getInstance()
             datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
