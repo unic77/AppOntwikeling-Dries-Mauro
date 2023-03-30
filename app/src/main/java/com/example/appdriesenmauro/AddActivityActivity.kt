@@ -58,7 +58,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
         binding.btnPublishEvent.setOnClickListener{
             var name = binding.txtNameEvent.text.toString()
 
-            /*val datePicker = binding.eventDatePicker
+            val datePicker = binding.eventDatePicker
             val today = Calendar.getInstance()
             datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
                 today.get(Calendar.DAY_OF_MONTH)
@@ -67,7 +67,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
                 val month = month + 1
                 date = "$day/$month/$year"
 
-            }*/
+            }
 
             var context = binding.txtContextEvent.text.toString()
 
