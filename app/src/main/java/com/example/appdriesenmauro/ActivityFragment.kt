@@ -30,6 +30,7 @@ class ActivityFragment : Fragment(R.layout.fragment_activity) {
         adapter.setItems(sampleActivityItems)
         adapter.notifyDataSetChanged()
     }
+
     fun switchFiewToFavorite(){
         adapter.setItems(favoriteActivityItems)
         adapter.notifyDataSetChanged()

@@ -30,10 +30,20 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             var switch = findViewById<Switch>(R.id.swAddToFavorite)
             switch.setOnClickListener{
                 when(switch.isChecked){
-                    true -> activityFragment.addFavorite(currentActivityItem)
-                    false -> activityFragment.removeFavorite(currentActivityItem)
+                    true -> {
+                                activityFragment.addFavorite(currentActivityItem)
+                                currentActivityItem.boolean = true
+                                //switch.isChecked = true
+                                }
+                    false -> {
+                                activityFragment.removeFavorite(currentActivityItem)
+                                currentActivityItem.boolean = false
+                                //switch.isChecked = false
+                                }
                 }
             }
+
+            switch.isChecked = currentActivityItem.boolean
         }
 
     }

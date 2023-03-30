@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
-import java.util.Calendar
+import java.util.*
 
 
 class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity): Fragment(R.layout.activity_addactivity) {
@@ -41,13 +41,18 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
+
+        val today2 = Calendar.getInstance()
+
+        date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)}/${today.get(Calendar.YEAR)}"
+
         picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)){
                 view, year, month, day ->
             val month = month+1
             val toast = "You have selected : $day/$month/$year"
             date = "$day/$month/$year"
 
-            Snackbar.make(binding.root, toast, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
         }
 
         binding.btnPublishEvent.setOnClickListener{
@@ -66,7 +71,9 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
             var context = binding.txtContextEvent.text.toString()
 
-            var activity = Activity(name, date, context,data)
+            var favorite = false
+
+            var activity = Activity(name, date, context,data,favorite)
             activityFragment.addActivity(activity)
 
             mainActivity.switchTo(activityFragment)
