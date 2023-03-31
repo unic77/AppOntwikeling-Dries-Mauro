@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goTOAddActivity(){
-        /*var intent = Intent(this, AddActivityActivity::class.java)
-        startActivity(intent)*/ // vragen of dit nu een activity is of een fragment
 
         var addActivityFragment = AddActivityActivity(activityFragment,this);
         switchTo(addActivityFragment)
