@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/txtVNameUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Not loged in"

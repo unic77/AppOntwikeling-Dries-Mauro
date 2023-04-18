@@ -34,7 +34,7 @@
                 android:id="@+id/txtMoreInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeTextType="uniform"
+                android:singleLine="false"
                 android:text="TextView" />
 
             <CalendarView
@@ -46,7 +46,7 @@
                 android:id="@+id/btnRemove"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="remove activitie" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

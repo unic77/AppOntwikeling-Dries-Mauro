@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
-class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: ActivityFragment): RecyclerView.Adapter<ActivityAdapter.ActivyViewHolder>() {
+class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: ActivityFragment,val mainActivity: MainActivity, user: User): RecyclerView.Adapter<ActivityAdapter.ActivyViewHolder>() {
     inner class ActivyViewHolder(currentItemView: View): RecyclerView.ViewHolder(currentItemView)
         private lateinit var  view: ActivityAdapter.ActivyViewHolder
         private var items = itemsIn
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ActivyViewHolder {
-        view = ActivyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
-        return view
-    }
+        private val user = user
+        override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ActivyViewHolder {
+            view = ActivyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
+            return view
+        }
 
     fun setItems(List: ArrayList<Activity>){
         items = List
@@ -26,8 +27,14 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
         holder.itemView.apply {
             findViewById<TextView>(R.id.nameEventTxt).text = currentActivityItem.title
             findViewById<TextView>(R.id.dateEventTxt).text = currentActivityItem.date
+            //mischien veranderen naar bitmap ipv URI
             findViewById<ImageView>(R.id.activityImageItem).setImageURI(currentActivityItem.data?.data)
-            var switch = findViewById<Switch>(R.id.swAddToFavorite)
+            findViewById<ImageView>(R.id.ivProfilePicture).setImageBitmap(currentActivityItem.pfUser)
+            val switch = findViewById<Switch>(R.id.swAddToFavorite)
+            findViewById<Button>(R.id.btnMoreInfo).setOnClickListener{
+                val moreInFragment = MoreInfoFragment(currentActivityItem, user,activityFragment,mainActivity)
+                mainActivity.switchTo(moreInFragment)
+            }
             switch.setOnClickListener{
                 when(switch.isChecked){
                     true -> {
