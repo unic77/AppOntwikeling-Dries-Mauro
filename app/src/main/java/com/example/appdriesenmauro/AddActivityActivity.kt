@@ -44,7 +44,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
         val today2 = Calendar.getInstance()
 
-        date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)}/${today.get(Calendar.YEAR)}"
+        date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
 
         picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)){
                 view, year, month, day ->
