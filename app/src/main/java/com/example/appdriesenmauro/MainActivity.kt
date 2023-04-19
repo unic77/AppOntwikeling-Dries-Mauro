@@ -65,7 +65,14 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+/*
+    misschien later nodig als de popum alert melding niet werkt
 
+    fun showDialog(text: String){
+        val dialog = RemoveDialogFragment()
+        dialog.show(supportFragmentManager,text)
+        }
+*/
     private fun goToProfile() {
         val snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)
         snak.show()
