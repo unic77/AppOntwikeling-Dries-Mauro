@@ -28,25 +28,28 @@
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:layout_marginTop="25dp" />
 
             <TextView
                 android:id="@+id/txtMoreInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="false"
-                android:text="TextView" />
-
-            <CalendarView
-                android:id="@+id/clndViewSetDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_marginTop="25dp" />
 
             <Button
                 android:id="@+id/btnRemove"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="remove activitie" />
+                android:layout_marginTop="25dp"
+                android:text="@string/remove" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

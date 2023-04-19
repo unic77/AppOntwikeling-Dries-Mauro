@@ -14,7 +14,7 @@ import kotlinx.coroutines.newSingleThreadContext
 class CreateAccountActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateAccountBinding
-    private lateinit var imageBitmap: Bitmap
+    private var imageBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
