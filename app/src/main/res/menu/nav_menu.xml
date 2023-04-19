@@ -5,7 +5,8 @@
         android:id="@+id/mnuHome"
         android:title="Home" />
     <item
-        android:id= "@+id/mnuFavourites"
+        android:id="@+id/mnuFavourites"
+        android:enabled="true"
         android:title="Favourites" />
 
     <item

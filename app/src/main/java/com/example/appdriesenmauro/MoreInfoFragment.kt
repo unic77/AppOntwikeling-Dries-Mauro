@@ -33,7 +33,11 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
             mainActivity.switchTo(activityFragment);
             activityFragment.removeItem(activity)
         }
-        binding.imvHeadFoto.setImageURI(activity.data?.data)
+
+        if(activity.data?.data != null) {
+            binding.imvHeadFoto.setImageURI(activity.data?.data)
+        }
+
         binding.txtName.text = activity.title
         binding.txtMoreInfo.text = activity.context
         val date = "date: ${activity.date}"

@@ -82,7 +82,8 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
             }
         }
         if (filteredlist.isEmpty()) {
-            val toast = "no data found..."
+            adapter.filterList(filteredlist)
+            val toast = "no event found with that name"
             Snackbar.make(binding.root,toast, Snackbar.LENGTH_SHORT).show()
         } else {
             adapter.filterList(filteredlist)

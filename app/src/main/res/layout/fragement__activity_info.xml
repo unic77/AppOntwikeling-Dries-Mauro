@@ -22,7 +22,7 @@
                 android:id="@+id/imvHeadFoto"
                 android:layout_width="match_parent"
                 android:layout_height="245dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                tools:srcCompat="@drawable/noimageselected" />
 
             <TextView
                 android:id="@+id/txtName"
