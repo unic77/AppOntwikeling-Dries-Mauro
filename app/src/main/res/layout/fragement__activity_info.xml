@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="407dp"
+        android:layout_height="604dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,30 +19,40 @@
             android:orientation="vertical">
 
             <ImageView
+                android:padding="10dp"
+                android:background="#000000"
                 android:id="@+id/imvHeadFoto"
-                android:layout_width="match_parent"
-                android:layout_height="245dp"
+                android:layout_width="331dp"
+                android:layout_height="186dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/noimageselected"
                 tools:srcCompat="@drawable/noimageselected" />
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
+                android:layout_marginTop="25dp"
+                android:text="test"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:singleLine="false"
-                android:layout_marginTop="25dp" />
+                android:textSize="25dp" />
 
             <TextView
                 android:id="@+id/txtMoreInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:layout_marginTop="25dp" />
+                android:layout_marginTop="25dp"
+                android:singleLine="false" />
 
             <Button
                 android:id="@+id/btnRemove"

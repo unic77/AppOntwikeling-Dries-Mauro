@@ -1,13 +1,10 @@
 <resources>
-    <string name="app_name">AppDriesEnMauro</string>
-    <string name="close_menu">AppDriesEnMauro</string>
-    <string name="open_menu">AppDriesEnMauro</string>
-<<<<<<< HEAD
+    <string name="app_name">test</string>
+    <string name="close_menu">iets</string>
+    <string name="open_menu">heey</string>
     <string name="dialog_remove" />
     <string name="dialog_do_you_want_to_remove" />
     <string name="dialog_cancel" />
-=======
     <string name="remove_activitie">remove activitie</string>
     <string name="remove">remove</string>
->>>>>>> 0ca8549c4698121c14d7af0ec00d89bcf094ee97
 </resources>

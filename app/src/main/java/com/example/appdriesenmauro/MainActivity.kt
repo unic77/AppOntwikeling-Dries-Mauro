@@ -111,7 +111,6 @@ class MainActivity : AppCompatActivity() {
    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // we need to do this to respond correctly to clicks on menu items, otherwise it won't be caught
         if(menuBarToggle.onOptionsItemSelected(item)) {
             return true
         }
