@@ -2,11 +2,18 @@ package com.example.appdriesenmauro
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appdriesenmauro.databinding.FragmentActivityBinding
+import com.google.android.material.snackbar.Snackbar
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
 
@@ -22,6 +29,17 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
         adapter = ActivityAdapter(sampleActivityItems,this,main,user)
         binding.rvwAcivity.adapter = adapter
         binding.rvwAcivity.layoutManager = LinearLayoutManager(this.context)
+        val SearchView = binding.idSV
+        SearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                filter(newText)
+                return false
+            }
+        })
         return binding.root
     }
 
@@ -54,5 +72,20 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
     fun addActivity(activity: Activity){
         sampleActivityItems.add(activity)
         adapter.notifyItemInserted(sampleActivityItems.size - 1)
+    }
+
+    private fun filter(text: String) {
+        val filteredlist = ArrayList<Activity>()
+        for (item in sampleActivityItems) {
+            if (item.title.toLowerCase().contains(text.lowercase(Locale.getDefault()))) {
+                filteredlist.add(item)
+            }
+        }
+        if (filteredlist.isEmpty()) {
+            val toast = "no data found..."
+            Snackbar.make(binding.root,toast, Snackbar.LENGTH_SHORT).show()
+        } else {
+            adapter.filterList(filteredlist)
+        }
     }
 }

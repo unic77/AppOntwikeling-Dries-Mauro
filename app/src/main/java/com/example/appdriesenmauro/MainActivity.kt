@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson

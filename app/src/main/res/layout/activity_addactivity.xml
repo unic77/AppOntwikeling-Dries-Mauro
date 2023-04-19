@@ -43,8 +43,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name event" />
+                android:hint="Name event"
+                android:inputType="textPersonName" />
 
 
             <DatePicker
@@ -62,10 +62,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:gravity="top|left"
+                android:hint="tell us a bit more about the event"
                 android:inputType="textMultiLine"
                 android:lines="5"
-                android:scrollHorizontally="false"
-                android:text="tell us a bit more about the event" />
+                android:scrollHorizontally="false" />
 
             <Button
                 android:id="@+id/btnPublishEvent"

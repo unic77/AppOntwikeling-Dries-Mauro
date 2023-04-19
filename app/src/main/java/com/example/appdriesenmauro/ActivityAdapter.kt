@@ -1,12 +1,16 @@
 package com.example.appdriesenmauro
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
 class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: ActivityFragment,val mainActivity: MainActivity, user: User): RecyclerView.Adapter<ActivityAdapter.ActivyViewHolder>() {
+
     inner class ActivyViewHolder(currentItemView: View): RecyclerView.ViewHolder(currentItemView)
         private lateinit var  view: ActivityAdapter.ActivyViewHolder
         private var items = itemsIn
@@ -15,6 +19,11 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             view = ActivyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
             return view
         }
+
+    fun filterList(filterList: ArrayList<Activity>) {
+        items = filterList
+        notifyDataSetChanged()
+    }
 
     fun setItems(List: ArrayList<Activity>){
         items = List
@@ -29,7 +38,10 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             findViewById<TextView>(R.id.dateEventTxt).text = currentActivityItem.date
             //mischien veranderen naar bitmap ipv URI
             findViewById<ImageView>(R.id.activityImageItem).setImageURI(currentActivityItem.data?.data)
-            findViewById<ImageView>(R.id.ivProfilePicture).setImageBitmap(currentActivityItem.pfUser)
+            if(currentActivityItem.pfUser != null) {
+                findViewById<ImageView>(R.id.ivProfilePicture).setImageBitmap(currentActivityItem.pfUser)
+            }
+
             val switch = findViewById<Switch>(R.id.swAddToFavorite)
             findViewById<Button>(R.id.btnMoreInfo).setOnClickListener{
                 val moreInFragment = MoreInfoFragment(currentActivityItem, user,activityFragment,mainActivity)

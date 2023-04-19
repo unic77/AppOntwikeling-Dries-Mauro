@@ -14,6 +14,7 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
     private val mainActivity = mainActivity
     private var activity = activity
     private val user = user
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +36,8 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
         binding.imvHeadFoto.setImageURI(activity.data?.data)
         binding.txtName.text = activity.title
         binding.txtMoreInfo.text = activity.context
+        val date = "date: ${activity.date}"
+        binding.txtDate.text =  date
 
         return binding.root
     }
