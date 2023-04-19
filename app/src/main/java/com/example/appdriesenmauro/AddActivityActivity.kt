@@ -17,13 +17,15 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 
-class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity): Fragment(R.layout.activity_addactivity) {
+class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity,user: User): Fragment(R.layout.activity_addactivity) {
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
     private var data: Intent? = null
     private lateinit var date: String
     private var mainActivity = mainActivity
+    private var userId = user.user_ID
+    private var user = user
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -41,7 +43,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
         //https://www.youtube.com/watch?v=fj-4x2X9Lew&ab_channel=ProgrammingGuru
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
-
         val today2 = Calendar.getInstance()
 
         date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
@@ -73,7 +74,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
             var favorite = false
 
-            var activity = Activity(name, date, context,data,favorite)
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite)
             activityFragment.addActivity(activity)
 
             mainActivity.switchTo(activityFragment)
@@ -95,6 +96,5 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     companion object{
         private val IMAGE_PICK_CODE = 1000
-        private val PREMISION_CODE = 1001
     }
 }

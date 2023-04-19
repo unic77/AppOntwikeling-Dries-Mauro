@@ -23,8 +23,8 @@
 
     <ImageView
         android:id="@+id/rectimage"
-        android:layout_width="match_parent"
-        android:layout_height="126dp"
+        android:layout_width="400dp"
+        android:layout_height="125dp"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="1.0"></ImageView>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivProfilePicture"
         android:layout_width="107dp"
         android:layout_height="103dp"
         android:background="#000000"
@@ -98,14 +98,13 @@
         android:id="@+id/swAddToFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginEnd="36dp"
         android:layout_marginBottom="84dp"
         android:checked="false"
         android:text="add to favorite"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/rectimage"
         app:layout_constraintEnd_toEndOf="@+id/rectimage"
-        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintHorizontal_bias="0.958"
         app:layout_constraintStart_toStartOf="@+id/rectimage"
         tools:checked="false" />
 

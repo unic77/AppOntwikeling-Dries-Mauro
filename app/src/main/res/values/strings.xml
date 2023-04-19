@@ -2,4 +2,7 @@
     <string name="app_name">AppDriesEnMauro</string>
     <string name="close_menu">AppDriesEnMauro</string>
     <string name="open_menu">AppDriesEnMauro</string>
+    <string name="dialog_remove" />
+    <string name="dialog_do_you_want_to_remove" />
+    <string name="dialog_cancel" />
 </resources>
