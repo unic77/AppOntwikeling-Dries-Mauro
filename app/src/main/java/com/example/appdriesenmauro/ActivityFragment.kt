@@ -40,8 +40,12 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
                 return false
             }
         })
+
+
+
         return binding.root
     }
+
 
     fun removeItem(activity: Activity){
         sampleActivityItems.remove(activity)
@@ -72,6 +76,10 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
     fun addActivity(activity: Activity){
         sampleActivityItems.add(activity)
         adapter.notifyItemInserted(sampleActivityItems.size - 1)
+    }
+
+    fun addSavedActivity(activity: Activity){
+        sampleActivityItems.add(activity)
     }
 
     private fun filter(text: String) {

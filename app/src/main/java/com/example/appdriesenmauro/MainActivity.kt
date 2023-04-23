@@ -16,6 +16,9 @@ import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +37,42 @@ class MainActivity : AppCompatActivity() {
         user = gson.fromJson(jsonUser,User::class.java)
         activityFragment = ActivityFragment(user)
         println("userName: " + user.name + " userID: " + user.user_ID)
+
         setupActivityListFragment()
         setupMenuDrawer()
+
+        //pakt de files die opgeslagen zijn en maakt er evenementen van
+        readSavedEvents()
+
         setContentView(binding.root)
     }
+
+    fun readSavedEvents(){
+        var files: Array<String>? = fileList()
+        if (files != null) {
+            for (item in files) {
+
+                var fileInputStream : FileInputStream? = null
+                fileInputStream = openFileInput(item)
+                var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
+                val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+
+                val stringBuilder: StringBuilder = StringBuilder()
+                var text: String? = null
+
+                while ({text = bufferedReader.readLine(); text}() != null){
+                    stringBuilder.append(text)
+                }
+
+                var jsonString = stringBuilder.toString()
+                val gson = Gson()
+                var opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
+
+                activityFragment.addSavedActivity(opgeslagenEvent)
+            }
+        }
+    }
+
 
     private fun setupActivityListFragment() {
         supportFragmentManager.beginTransaction().apply {
@@ -65,14 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-/*
-    misschien later nodig als de popum alert melding niet werkt
 
-    fun showDialog(text: String){
-        val dialog = RemoveDialogFragment()
-        dialog.show(supportFragmentManager,text)
-        }
-*/
     private fun goToProfile() {
         val snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)
         snak.show()
