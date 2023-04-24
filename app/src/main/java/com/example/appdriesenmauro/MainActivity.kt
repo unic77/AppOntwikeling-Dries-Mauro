@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         val jsonUser = intent.getStringExtra("thisUser")
         user = gson.fromJson(jsonUser,User::class.java)
         activityFragment = ActivityFragment(user)
-        println("userName: " + user.name + " userID: " + user.user_ID)
+        val header =
+
         setupActivityListFragment()
         setupMenuDrawer()
         setContentView(binding.root)
