@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.FragementActivityInfoBinding
+import com.google.firebase.auth.FirebaseAuth
 import java.time.Instant
 
 class MoreInfoFragment(activity: Activity, user: User,activityFragment: ActivityFragment,mainActivity: MainActivity) : Fragment(R.layout.fragement__activity_info){
     private lateinit var binding : FragementActivityInfoBinding
     private lateinit var builder : AlertDialog.Builder
+    private lateinit var mAuth: FirebaseAuth;
     private var activityFragment = activityFragment
     private val mainActivity = mainActivity
     private var activity = activity
@@ -25,9 +27,10 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mAuth = FirebaseAuth.getInstance()
         binding = FragementActivityInfoBinding.inflate(layoutInflater)
 
-        if(user.user_ID == activity.postedUser) {
+        if( mAuth.currentUser?.uid == activity.postedUser) {
             binding.btnRemove.visibility = View.VISIBLE
         }
         else{

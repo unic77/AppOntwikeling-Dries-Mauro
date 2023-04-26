@@ -1,10 +1,8 @@
 package com.example.appdriesenmauro
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
@@ -17,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
-import kotlinx.coroutines.newSingleThreadContext
 
 class CreateAccountActivity: AppCompatActivity() {
 
@@ -91,10 +88,6 @@ class CreateAccountActivity: AppCompatActivity() {
                     }
                 }
 
-
-
-
-
             //oude code voor het inloggen
 
             val userId = (0..1000).random()
@@ -104,7 +97,7 @@ class CreateAccountActivity: AppCompatActivity() {
                 compatence = true
             }
 
-            val user = User(name,userId,password,compatence,imageBitmap);
+            val user = User(name,userId,compatence,imageBitmap);
 
             val gson = Gson()
 

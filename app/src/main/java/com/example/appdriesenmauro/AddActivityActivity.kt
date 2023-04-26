@@ -1,6 +1,7 @@
 package com.example.appdriesenmauro
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
@@ -13,6 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.util.*
 
 
@@ -22,8 +27,9 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     private var activityFragment = activityFragmentIn
     private var data: Bitmap? = null
     private lateinit var date: String
+    private lateinit var mAuth: FirebaseAuth;
+    private lateinit var gebruiker: FirebaseAuth
     private var mainActivity = mainActivity
-    private var userId = user.user_ID
     private var user = user
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -34,6 +40,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     ): View? {
         binding = ActivityAddactivityBinding.inflate(layoutInflater)
 
+        mAuth = FirebaseAuth.getInstance()
 
         binding.btnAddImage.setOnClickListener{
             pickImage()
@@ -72,11 +79,40 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
             var favorite = false
 
+            var userId = mAuth.currentUser?.uid
 
-
-
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite)
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,null)
             activityFragment.addActivity(activity)
+
+            System.out.println("1")
+            //opslaan met behulp van Gson en Json
+            val gson = Gson()
+            val activityJson = gson.toJson(activity)
+            System.out.println("2")
+            //gemaakte activiteit word opgeslagen in stringvorm
+
+            val fileOutputStream: FileOutputStream
+
+            System.out.println("3")
+
+            try {
+                var fileName = name + mAuth.uid
+                fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
+                fileOutputStream.write(activityJson.toByteArray())
+                val toast = "Event Saved"
+                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                System.out.println("4")
+            }
+            catch (e: FileNotFoundException){
+                e.printStackTrace()
+                System.out.println("5")
+            }
+            catch (e: java.lang.Exception){
+                e.printStackTrace()
+                System.out.println("6")
+            }
+
+            System.out.println("7")
 
             mainActivity.switchTo(activityFragment)
         }

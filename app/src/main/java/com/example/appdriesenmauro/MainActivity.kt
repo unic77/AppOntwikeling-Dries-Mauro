@@ -1,5 +1,6 @@
 package com.example.appdriesenmauro
 
+import android.content.Intent
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,9 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        val gson = Gson()
-        val jsonUser = intent.getStringExtra("thisUser")
-        user = gson.fromJson(jsonUser,User::class.java)
+        user = User("mauro",1,true,null)
         activityFragment = ActivityFragment(user)
         val headerView : View = binding.navView.getHeaderView(0)
 
@@ -51,17 +50,16 @@ class MainActivity : AppCompatActivity() {
         val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
         val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
 
-        gebruiker = mAuth
-
-        emailBinding.setText(gebruiker.currentUser?.email)
+        emailBinding.setText(mAuth.currentUser?.email)
         pfBinding.setImageBitmap(user.pfBitmap)
 
         logOutButton.setOnClickListener {
-            System.out.println("nu moet ik dus uitloggen ofwa")
+            val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+            mAuth.signOut()
         }
 
-
-
+        readSavedEvents()
         setupActivityListFragment()
         setupMenuDrawer()
         setContentView(binding.root)

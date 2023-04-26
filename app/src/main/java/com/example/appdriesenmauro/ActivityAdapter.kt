@@ -1,12 +1,9 @@
 package com.example.appdriesenmauro
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
 class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: ActivityFragment,val mainActivity: MainActivity, user: User): RecyclerView.Adapter<ActivityAdapter.ActivyViewHolder>() {
