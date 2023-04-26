@@ -74,6 +74,10 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
         adapter.notifyItemInserted(sampleActivityItems.size - 1)
     }
 
+    fun addSavedActivity(activity: Activity){
+        sampleActivityItems.add(activity)
+    }
+
     private fun filter(text: String) {
         val filteredlist = ArrayList<Activity>()
         for (item in sampleActivityItems) {

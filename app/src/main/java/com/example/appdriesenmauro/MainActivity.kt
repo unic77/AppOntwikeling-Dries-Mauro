@@ -18,7 +18,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,11 +31,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
+    private lateinit var mAuth: FirebaseAuth;
+    private lateinit var gebruiker: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        mAuth = FirebaseAuth.getInstance()
+
         val gson = Gson()
         val jsonUser = intent.getStringExtra("thisUser")
         user = gson.fromJson(jsonUser,User::class.java)
@@ -41,7 +51,9 @@ class MainActivity : AppCompatActivity() {
         val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
         val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
 
-        emailBinding.setText(user.name)
+        gebruiker = mAuth
+
+        emailBinding.setText(gebruiker.currentUser?.email)
         pfBinding.setImageBitmap(user.pfBitmap)
 
         logOutButton.setOnClickListener {
@@ -53,6 +65,35 @@ class MainActivity : AppCompatActivity() {
         setupActivityListFragment()
         setupMenuDrawer()
         setContentView(binding.root)
+    }
+
+    fun readSavedEvents(){
+        var files: Array<String>? = fileList()
+        if (files != null) {
+            for (item in files) {
+
+                var fileInputStream : FileInputStream? = null
+                fileInputStream = openFileInput(item)
+                var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
+                val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+
+                val stringBuilder: StringBuilder = StringBuilder()
+                var text: String? = null
+
+                while ({text = bufferedReader.readLine(); text}() != null){
+                    stringBuilder.append(text)
+                }
+
+                var jsonString = stringBuilder.toString()
+                val gson = Gson()
+
+
+
+                var opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
+
+                activityFragment.addSavedActivity(opgeslagenEvent)
+            }
+        }
     }
 
     private fun setupActivityListFragment() {
@@ -82,14 +123,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-/*
-    misschien later nodig als de popum alert melding niet werkt
 
-    fun showDialog(text: String){
-        val dialog = RemoveDialogFragment()
-        dialog.show(supportFragmentManager,text)
-        }
-*/
+
     private fun goToProfile() {
         val snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)
         snak.show()
