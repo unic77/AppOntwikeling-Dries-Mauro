@@ -34,77 +34,89 @@ class CreateAccountActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCreateAccountBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityCreateAccountBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        mAuth = Firebase.auth
+            mAuth = Firebase.auth
 
-        binding.btnGetFotoLibrary.setOnClickListener {
-            pickImage()
-        }
-
-        binding.btnTakeFoto.setOnClickListener{
-            takeImage()
-        }
-
-        binding.btnCreatAccount.setOnClickListener{
-
-            val email = binding.Txtemail.text.toString()
-            val name = binding.plainTxtName.text.toString()
-            val password = binding.txtPassword.text.toString()
-
-            if (TextUtils.isEmpty(email)){
-                val toast = "Please enter an email adress"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-            }
-            if (TextUtils.isEmpty(name)){
-                val toast = "Please enter a name"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-            }
-            if (TextUtils.isEmpty(password)){
-                val toast = "Please enter an password"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+            binding.btnGetFotoLibrary.setOnClickListener {
+                pickImage()
             }
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
+            binding.btnTakeFoto.setOnClickListener {
+                takeImage()
+            }
 
-                        val toast = "User successfully created"
-                        Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+            binding.btnCreatAccount.setOnClickListener {
 
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
-                        val user = mAuth.currentUser
-                    } else {
+                val email = binding.Txtemail.text.toString()
+                val name = binding.plainTxtName.text.toString()
+                val password = binding.txtPassword.text.toString()
 
-                        val toast = "Failed to create user"
-                        Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                if (TextUtils.isEmpty(email)) {
+                    val toast = "Please enter an email adress"
+                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                }
+                if (TextUtils.isEmpty(name)) {
+                    val toast = "Please enter a name"
+                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                }
+                if (TextUtils.isEmpty(password)) {
+                    val toast = "Please enter an password"
+                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                 }
 
-            //oude code voor het inloggen
+                if (password.count() <= 6) {
+                    throw ownException("password must be higher than 6 char")
+                }
+                mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
 
-            val userId = (0..1000).random()
+                            val toast = "User successfully created"
+                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
 
-            var compatence = false
-            if(binding.cbCompentents.isChecked){
-                compatence = true
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success")
+                            val user = mAuth.currentUser
+                        } else {
+
+                            val toast = "Failed to create user"
+                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                this, "Authentication failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                //oude code voor het inloggen
+
+                val userId = (0..1000).random()
+
+                var compatence = false
+                if (binding.cbCompentents.isChecked) {
+                    compatence = true
+                }
+
+                val user = User(name, userId, compatence, imageBitmap);
+
+                val gson = Gson()
+
+                val userJson = gson.toJson(user)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("thisUser", userJson)
+                startActivity(intent)
             }
-
-            val user = User(name,userId,compatence,imageBitmap);
-
-            val gson = Gson()
-
-            val userJson = gson.toJson(user)
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("thisUser",userJson)
-            startActivity(intent)
+        }
+        catch(e: ownException){
+            System.out.println("ik ben hier")
+            val toast = "account has not been created,${e.message}"
+            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
         }
     }
 

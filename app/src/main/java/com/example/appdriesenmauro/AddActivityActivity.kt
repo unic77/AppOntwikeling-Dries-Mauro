@@ -84,16 +84,13 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,null)
             activityFragment.addActivity(activity)
 
-            System.out.println("1")
             //opslaan met behulp van Gson en Json
             val gson = Gson()
             val activityJson = gson.toJson(activity)
-            System.out.println("2")
-            //gemaakte activiteit word opgeslagen in stringvorm
 
+            //gemaakte activiteit word opgeslagen in stringvorm
             val fileOutputStream: FileOutputStream
 
-            System.out.println("3")
 
             try {
                 var fileName = name + mAuth.uid
@@ -101,18 +98,13 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
                 fileOutputStream.write(activityJson.toByteArray())
                 val toast = "Event Saved"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                System.out.println("4")
             }
             catch (e: FileNotFoundException){
                 e.printStackTrace()
-                System.out.println("5")
             }
             catch (e: java.lang.Exception){
                 e.printStackTrace()
-                System.out.println("6")
             }
-
-            System.out.println("7")
 
             mainActivity.switchTo(activityFragment)
         }
