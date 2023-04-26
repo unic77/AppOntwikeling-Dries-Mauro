@@ -50,8 +50,8 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 .show()
         }
 
-        if(activity.data?.data != null) {
-            binding.imvHeadFoto.setImageURI(activity.data?.data)
+        if(activity.data != null) {
+            binding.imvHeadFoto.setImageBitmap(activity.data)
         }
 
         binding.txtName.text = activity.title

@@ -8,6 +8,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.children
@@ -32,7 +35,20 @@ class MainActivity : AppCompatActivity() {
         val jsonUser = intent.getStringExtra("thisUser")
         user = gson.fromJson(jsonUser,User::class.java)
         activityFragment = ActivityFragment(user)
-        val header =
+        val headerView : View = binding.navView.getHeaderView(0)
+
+        val pfBinding = headerView.findViewById<ImageView>(R.id.profileFoto)
+        val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
+        val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
+
+        emailBinding.setText(user.name)
+        pfBinding.setImageBitmap(user.pfBitmap)
+
+        logOutButton.setOnClickListener {
+            System.out.println("nu moet ik dus uitloggen ofwa")
+        }
+
+
 
         setupActivityListFragment()
         setupMenuDrawer()

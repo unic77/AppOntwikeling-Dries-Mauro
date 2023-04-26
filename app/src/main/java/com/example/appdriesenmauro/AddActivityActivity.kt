@@ -2,8 +2,10 @@ package com.example.appdriesenmauro
 
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
-    private var data: Intent? = null
+    private var data: Bitmap? = null
     private lateinit var date: String
     private var mainActivity = mainActivity
     private var userId = user.user_ID
@@ -40,7 +42,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
         //https://www.youtube.com/watch?v=fj-4x2X9Lew&ab_channel=ProgrammingGuru
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
-        val today2 = Calendar.getInstance()
 
         date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
 
@@ -87,8 +88,8 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data2: Intent?) {
         //https://www.youtube.com/watch?v=gd300jxLEe0&ab_channel=AtifPervaiz
-        data = data2
-        binding.imageTopOfInfoPage.setImageURI(data2?.data)
+        data = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
+        binding.imageTopOfInfoPage.setImageBitmap(data)
     }
 
     companion object{

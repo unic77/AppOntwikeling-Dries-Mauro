@@ -37,7 +37,7 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             findViewById<TextView>(R.id.nameEventTxt).text = currentActivityItem.title
             findViewById<TextView>(R.id.dateEventTxt).text = currentActivityItem.date
             //mischien veranderen naar bitmap ipv URI
-            findViewById<ImageView>(R.id.activityImageItem).setImageURI(currentActivityItem.data?.data)
+            findViewById<ImageView>(R.id.activityImageItem).setImageBitmap(currentActivityItem.data)
             if(currentActivityItem.pfUser != null) {
                 findViewById<ImageView>(R.id.ivProfilePicture).setImageBitmap(currentActivityItem.pfUser)
             }
