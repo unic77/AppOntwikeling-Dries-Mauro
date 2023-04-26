@@ -40,12 +40,8 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
                 return false
             }
         })
-
-
-
         return binding.root
     }
-
 
     fun removeItem(activity: Activity){
         sampleActivityItems.remove(activity)

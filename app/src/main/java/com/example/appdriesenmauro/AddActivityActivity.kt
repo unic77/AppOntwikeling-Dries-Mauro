@@ -1,12 +1,11 @@
 package com.example.appdriesenmauro
 
 
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.util.*
 
 
@@ -24,7 +20,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
-    private var data: Intent? = null
+    private var data: Bitmap? = null
     private lateinit var date: String
     private var mainActivity = mainActivity
     private var userId = user.user_ID
@@ -46,7 +42,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
         //https://www.youtube.com/watch?v=fj-4x2X9Lew&ab_channel=ProgrammingGuru
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
-        val today2 = Calendar.getInstance()
 
         date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
 
@@ -83,28 +78,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite)
             activityFragment.addActivity(activity)
 
-            //opslaan met behulp van Gson en Json
-            val gson = Gson()
-            val activityJson = gson.toJson(activity)
-
-            //gemaakte activiteit word opgeslagen in stringvorm
-
-            val fileOutputStream: FileOutputStream
-
-            try {
-                fileOutputStream = requireActivity().openFileOutput(name, Context.MODE_PRIVATE)
-                fileOutputStream.write(activityJson.toByteArray())
-                val toast = "Event Saved"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-            }
-            catch (e: FileNotFoundException){
-                e.printStackTrace()
-            }
-            catch (e: java.lang.Exception){
-                e.printStackTrace()
-            }
-
-
             mainActivity.switchTo(activityFragment)
         }
         return binding.root
@@ -118,8 +91,8 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data2: Intent?) {
         //https://www.youtube.com/watch?v=gd300jxLEe0&ab_channel=AtifPervaiz
-        data = data2
-        binding.imageTopOfInfoPage.setImageURI(data2?.data)
+        data = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
+        binding.imageTopOfInfoPage.setImageBitmap(data)
     }
 
     companion object{

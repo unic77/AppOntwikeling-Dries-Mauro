@@ -2,7 +2,6 @@ package com.example.appdriesenmauro
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.FileObserver
 import android.provider.CalendarContract.Instances
 import android.text.TextUtils.replace
 import android.view.LayoutInflater
@@ -11,10 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.FragementActivityInfoBinding
-import java.io.File
-import java.io.FileInputStream
 import java.time.Instant
-import kotlin.io.path.fileVisitor
 
 class MoreInfoFragment(activity: Activity, user: User,activityFragment: ActivityFragment,mainActivity: MainActivity) : Fragment(R.layout.fragement__activity_info){
     private lateinit var binding : FragementActivityInfoBinding
@@ -54,8 +50,8 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 .show()
         }
 
-        if(activity.data?.data != null) {
-            binding.imvHeadFoto.setImageURI(activity.data?.data)
+        if(activity.data != null) {
+            binding.imvHeadFoto.setImageBitmap(activity.data)
         }
 
         binding.txtName.text = activity.title

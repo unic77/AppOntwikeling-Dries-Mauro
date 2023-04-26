@@ -8,6 +8,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.children
@@ -15,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.FileInputStream
@@ -26,24 +31,39 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
-
+    private lateinit var mAuth: FirebaseAuth;
+    private lateinit var gebruiker: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        mAuth = FirebaseAuth.getInstance()
+
         val gson = Gson()
         val jsonUser = intent.getStringExtra("thisUser")
         user = gson.fromJson(jsonUser,User::class.java)
         activityFragment = ActivityFragment(user)
-        println("userName: " + user.name + " userID: " + user.user_ID)
+        val headerView : View = binding.navView.getHeaderView(0)
+
+        val pfBinding = headerView.findViewById<ImageView>(R.id.profileFoto)
+        val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
+        val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
+
+        gebruiker = mAuth
+
+        emailBinding.setText(gebruiker.currentUser?.email)
+        pfBinding.setImageBitmap(user.pfBitmap)
+
+        logOutButton.setOnClickListener {
+            System.out.println("nu moet ik dus uitloggen ofwa")
+        }
+
+
 
         setupActivityListFragment()
         setupMenuDrawer()
-
-        //pakt de files die opgeslagen zijn en maakt er evenementen van
-        readSavedEvents()
-
         setContentView(binding.root)
     }
 
@@ -76,7 +96,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupActivityListFragment() {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frmActivitieContainer,activityFragment)
@@ -104,6 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun goToProfile() {
         val snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)

@@ -66,7 +66,6 @@ class UserActivity: AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
 
-
                     } else {
 
                         val toast = "Failed, make sure that email and password is correct, first time use create account"
