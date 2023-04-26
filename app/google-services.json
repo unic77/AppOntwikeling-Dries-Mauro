@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "815652470489",
+    "project_id": "appmaurodries",
+    "storage_bucket": "appmaurodries.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815652470489:android:65680b4ce16886f19dc8c8",
+        "android_client_info": {
+          "package_name": "com.example.appdriesenmauro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815652470489-fcbagd81gkrogrl6g0m08a676v5aeeo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ2AoWHSQ3DwwklIebIbL7MRCuX-vjRNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815652470489-fcbagd81gkrogrl6g0m08a676v5aeeo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

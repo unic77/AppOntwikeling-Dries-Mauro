@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
 
                 var jsonString = stringBuilder.toString()
                 val gson = Gson()
+
+
+
                 var opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
 
                 activityFragment.addSavedActivity(opgeslagenEvent)

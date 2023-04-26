@@ -77,6 +77,9 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
             var favorite = false
 
+
+
+
             var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite)
             activityFragment.addActivity(activity)
 
