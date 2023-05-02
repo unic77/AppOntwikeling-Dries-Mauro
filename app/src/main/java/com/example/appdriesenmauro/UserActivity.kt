@@ -66,7 +66,7 @@ class UserActivity: AppCompatActivity() {
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
 
                         val intent = Intent(this, MainActivity::class.java)
-                        val user = User(name,1,true,null)
+                        val user = User(name,"lel",true,null)
                         val gson = Gson()
                         val userJson = gson.toJson(user)
                         intent.putExtra("thisUser",userJson)

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        user = User("mauro",1,true,null)
+        user = User("mauro","lel",true,null)
         activityFragment = ActivityFragment(user)
         val headerView : View = binding.navView.getHeaderView(0)
 

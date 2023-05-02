@@ -103,7 +103,7 @@ class CreateAccountActivity: AppCompatActivity() {
                     compatence = true
                 }
 
-                val user = User(name, userId, compatence, imageBitmap);
+                val user = User(name, userId.toString(), compatence, imageBitmap);
 
                 val gson = Gson()
 

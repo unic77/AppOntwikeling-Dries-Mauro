@@ -75,7 +75,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
 
 
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite)
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,null)
             activityFragment.addActivity(activity)
 
             mainActivity.switchTo(activityFragment)
