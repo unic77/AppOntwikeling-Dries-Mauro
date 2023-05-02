@@ -3,6 +3,7 @@ package com.example.appdriesenmauro
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
@@ -10,26 +11,34 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appdriesenmauro.databinding.ActivityCreateAccountBinding
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
+import java.net.URI
 
 class CreateAccountActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateAccountBinding
     private var imageBitmap: Bitmap? = null
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var FStorage: StorageReference
 
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
-        if(currentUser != null){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+        //if(currentUser != null){
+            //val intent = Intent(this, MainActivity::class.java)
+            //startActivity(intent)
+        //}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +48,7 @@ class CreateAccountActivity: AppCompatActivity() {
             setContentView(binding.root)
 
             mAuth = Firebase.auth
+            FStorage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://appmaurodries.appspot.com/profilePic")
 
             binding.btnGetFotoLibrary.setOnClickListener {
                 pickImage()
@@ -93,6 +103,8 @@ class CreateAccountActivity: AppCompatActivity() {
                             ).show()
                         }
                     }
+
+                uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
 
                 //oude code voor het inloggen
 
@@ -149,5 +161,20 @@ class CreateAccountActivity: AppCompatActivity() {
     companion object{
         private val IMAGE_PICK_CODE = 1000
         private val REQUEST_IMAGE_CAPTURE = 1002
+    }
+
+    fun uploadProfileImage(photo: Uri){
+        val filRef = FStorage.child(mAuth.currentUser?.uid + ".jpg")
+        val uploadTask = filRef.putFile(photo)
+
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            System.out.println("succes")
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            return@Continuation filRef.downloadUrl
+        })
     }
 }

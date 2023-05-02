@@ -1,6 +1,8 @@
 package com.example.appdriesenmauro
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +23,9 @@ import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.FileInputStream
@@ -32,8 +37,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
-    private lateinit var mAuth: FirebaseAuth;
-    private lateinit var gebruiker: FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +46,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         mAuth = FirebaseAuth.getInstance()
+        storage = Firebase.storage
+        val pathRefrenc = storage.getReferenceFromUrl("gs://appmaurodries.appspot.com/profilePic/" + mAuth.currentUser?.uid +".jpg" )
+        var userPf: Bitmap? = null
+        val ONE_MEGABYTE: Long = 1024 * 1024
+        System.out.println("ik ben hier1")
+        pathRefrenc.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+            System.out.println("ik ben hier1")
+            userPf = BitmapFactory.decodeByteArray(it,0, it.size)
+            System.out.println("ik ben hier 2")
+        }.addOnFailureListener {
+            val toast = "no Pf found"
+            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+        }
 
-        user = User("mauro",1,true,null)
+        user = User("mauro",1,true,userPf)
         activityFragment = ActivityFragment(user)
         val headerView : View = binding.navView.getHeaderView(0)
 
