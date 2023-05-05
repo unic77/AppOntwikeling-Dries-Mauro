@@ -1,6 +1,8 @@
 package com.example.appdriesenmauro
 
 
+import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,7 +16,10 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.util.*
 
 
@@ -27,6 +32,9 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     private var mainActivity = mainActivity
     private var userId = user.user_ID
     private var user = user
+    private lateinit var mAuth: FirebaseAuth;
+    private lateinit var gebruiker: FirebaseAuth
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -81,7 +89,31 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             val image = stream.toByteArray()
 
             var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image)
+
+
             activityFragment.addActivity(activity)
+
+            //opslaan met behulp van Gson en Json
+            val gson = Gson()
+            val activityJson = gson.toJson(activity)
+
+            //gemaakte activiteit word opgeslagen in stringvorm
+            val fileOutputStream: FileOutputStream
+
+
+            try {
+                var fileName = name + mAuth.uid
+                fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
+                fileOutputStream.write(activityJson.toByteArray())
+                val toast = "Event Saved"
+                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+            }
+            catch (e: FileNotFoundException){
+                e.printStackTrace()
+            }
+            catch (e: java.lang.Exception){
+                e.printStackTrace()
+            }
 
             mainActivity.switchTo(activityFragment)
         }

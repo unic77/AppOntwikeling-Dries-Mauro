@@ -3,12 +3,9 @@ package com.example.appdriesenmauro
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.hardware.camera2.CameraManager.AvailabilityCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -16,17 +13,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
+import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -47,30 +42,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         mAuth = FirebaseAuth.getInstance()
-        storage = Firebase.storage
 
-        var userPf: Bitmap? = null
+
+        var userPfp: Bitmap? = null
 
         storage = Firebase.storage
+        val localFile = File.createTempFile(mAuth.currentUser!!.uid,".jpg")
         val pathRefrenc = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
-        val localfile = File.createTempFile(mAuth.currentUser!!.uid,"jpg")
+        /*pathRefrenc.getFile(localFile).onSuccessTask {
+            
+        }*/
+        userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
 
-        pathRefrenc.getFile(localfile).addOnSuccessListener {
-            System.out.println("test")
-        }.addOnFailureListener{
-            System.out.println("er gin iets mis")
-        }
 
-        user = User(mAuth.currentUser!!.uid,true,userPf)
-        activityFragment = ActivityFragment(user)
         val headerView : View = binding.navView.getHeaderView(0)
 
         val pfBinding = headerView.findViewById<ImageView>(R.id.profileFoto)
         val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
         val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
 
+        pfBinding.setImageBitmap(userPfp)
+
+        System.out.println(userPfp)
+        System.out.println("ik ben er uit")
+
         emailBinding.setText(mAuth.currentUser?.email)
+
         //pfBinding.setImageBitmap(user.pfBitmap)
+
+        user = User(mAuth.currentUser!!.uid,true,userPfp)
+        activityFragment = ActivityFragment(user)
 
         logOutButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)

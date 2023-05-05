@@ -38,7 +38,9 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
             if(currentActivityItem.pfUser != null) {
                 findViewById<ImageView>(R.id.ivProfilePicture).setImageBitmap(currentActivityItem.pfUser)
             }
-
+            else{
+                System.out.println("activity.adapter")
+            }
             val switch = findViewById<Switch>(R.id.swAddToFavorite)
             findViewById<Button>(R.id.btnMoreInfo).setOnClickListener{
                 val moreInFragment = MoreInfoFragment(currentActivityItem, user,activityFragment,mainActivity)
