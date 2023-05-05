@@ -44,11 +44,12 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
             builder.setTitle("Alert!")
                 .setMessage("Are you sure you want to delete this event? You cannot recover the event once deleted")
                 .setCancelable(true)
-                .setPositiveButton("Yes"){dialogInterface,it ->
+                .setPositiveButton("Yes, delete the event"){dialogInterface,it ->
                     mainActivity.switchTo(activityFragment);
                     activityFragment.removeItem(activity)
+                    //.delete()     moet nog gebeuren
                 }
-                .setNegativeButton("pls not DADDY"){dialogInterface,it ->
+                .setNegativeButton("Don't delete!!!"){dialogInterface,it ->
                 }
                 .show()
         }

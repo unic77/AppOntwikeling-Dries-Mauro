@@ -3,6 +3,7 @@ package com.example.appdriesenmauro
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -73,9 +75,12 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             var favorite = false
 
 
+            //foto van het event word opgeslagen als een BYTEARRAY en wnr we deze nodig hebben zetten we deze om naar een bitmap
+            val stream = ByteArrayOutputStream()
+            data?.compress(Bitmap.CompressFormat.PNG, 90, stream)
+            val image = stream.toByteArray()
 
-
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,null)
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image)
             activityFragment.addActivity(activity)
 
             mainActivity.switchTo(activityFragment)

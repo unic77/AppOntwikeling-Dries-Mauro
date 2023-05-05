@@ -23,10 +23,10 @@ class UserActivity: AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = Firebase.auth
         val currentUser = mAuth.currentUser
-        if(currentUser != null){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+        //if(currentUser != null){
+           //val intent = Intent(this, MainActivity::class.java)
+            //startActivity(intent)
+        //}
     }
 
 
@@ -42,17 +42,13 @@ class UserActivity: AppCompatActivity() {
         binding.loginBtn.setOnClickListener{
 
             val email = binding.emailadress.text.toString()
-            val name = binding.Usernametxt.text.toString()
             val password = binding.Passporttxt.text.toString()
 
             if (TextUtils.isEmpty(email)){
                 val toast = "Please enter an email adress"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
-            if (TextUtils.isEmpty(name)){
-                val toast = "Please enter a name"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-            }
+
             if (TextUtils.isEmpty(password)){
                 val toast = "Please enter an password"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
@@ -66,10 +62,6 @@ class UserActivity: AppCompatActivity() {
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
 
                         val intent = Intent(this, MainActivity::class.java)
-                        val user = User(name,"lel",true,null)
-                        val gson = Gson()
-                        val userJson = gson.toJson(user)
-                        intent.putExtra("thisUser",userJson)
                         startActivity(intent)
 
                     } else {

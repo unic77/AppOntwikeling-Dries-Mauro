@@ -6,20 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/plainTxtName"
-        android:layout_width="222dp"
-        android:layout_height="72dp"
-        android:ems="10"
-        android:hint="Enter name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.215" />
-
     <Button
         android:id="@+id/btnCreatAccount"
         android:layout_width="wrap_content"
@@ -99,14 +85,16 @@
         android:id="@+id/txtPassword"
         android:layout_width="222dp"
         android:layout_height="77dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="enter pasword"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/cbCompentents"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/plainTxtName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtvCreatAccount"
+        app:layout_constraintVertical_bias="0.436" />
 
     <CheckBox
         android:id="@+id/cbCompentents"
@@ -122,11 +110,10 @@
         android:id="@+id/Txtemail"
         android:layout_width="222dp"
         android:layout_height="77dp"
-        android:layout_marginBottom="7dp"
         android:ems="10"
         android:hint="Email adress"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/plainTxtName"
+        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtvCreatAccount" />

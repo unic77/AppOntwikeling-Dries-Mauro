@@ -1,6 +1,8 @@
 package com.example.appdriesenmauro
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,8 +23,12 @@ import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 
@@ -32,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
-    private lateinit var mAuth: FirebaseAuth;
-    private lateinit var gebruiker: FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +47,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         mAuth = FirebaseAuth.getInstance()
+        storage = Firebase.storage
 
-        user = User("mauro","lel",true,null)
+        var userPf: Bitmap? = null
+
+        storage = Firebase.storage
+        val pathRefrenc = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
+        val localfile = File.createTempFile(mAuth.currentUser!!.uid,"jpg")
+
+        pathRefrenc.getFile(localfile).addOnSuccessListener {
+            System.out.println("test")
+        }.addOnFailureListener{
+            System.out.println("er gin iets mis")
+        }
+
+        user = User(mAuth.currentUser!!.uid,true,userPf)
         activityFragment = ActivityFragment(user)
         val headerView : View = binding.navView.getHeaderView(0)
 
@@ -51,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
 
         emailBinding.setText(mAuth.currentUser?.email)
-        pfBinding.setImageBitmap(user.pfBitmap)
+        //pfBinding.setImageBitmap(user.pfBitmap)
 
         logOutButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
@@ -136,7 +155,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun gotToSupport(){
         binding.drawerLayout.closeDrawer(Gravity.LEFT)
-        val snak = Snackbar.make(binding.root, "sopport not online", Snackbar.LENGTH_LONG)
+        val snak = Snackbar.make(binding.root, "support not online", Snackbar.LENGTH_LONG)
         snak.show()
     }
 
