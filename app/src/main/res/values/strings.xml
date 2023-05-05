@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test</string>
+    <string name="app_name">event-planer</string>
     <string name="close_menu">iets</string>
     <string name="open_menu">heey</string>
     <string name="dialog_remove" />
