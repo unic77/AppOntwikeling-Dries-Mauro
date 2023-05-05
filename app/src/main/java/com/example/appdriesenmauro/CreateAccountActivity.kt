@@ -83,13 +83,13 @@ class CreateAccountActivity: AppCompatActivity() {
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-
                             val toast = "User successfully created"
                             Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-
+                            uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = mAuth.currentUser
                         } else {
 
                             val toast = "Failed to create user"
@@ -104,25 +104,13 @@ class CreateAccountActivity: AppCompatActivity() {
                         }
                     }
 
-                uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
-
                 //oude code voor het inloggen
-
-                val userId = (0..1000).random()
 
                 var compatence = false
                 if (binding.cbCompentents.isChecked) {
                     compatence = true
                 }
 
-                val user = User(name, userId, compatence, imageBitmap);
-
-                val gson = Gson()
-
-                val userJson = gson.toJson(user)
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("thisUser", userJson)
-                startActivity(intent)
             }
         }
         catch(e: ownException){
