@@ -72,7 +72,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             ) { view3, year, month, day ->
                 val month = month + 1
                 date = "$day/$month/$year"
-
+                //i
             }
 
             var context = binding.txtContextEvent.text.toString()

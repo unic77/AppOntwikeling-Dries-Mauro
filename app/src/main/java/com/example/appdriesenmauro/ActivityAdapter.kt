@@ -31,6 +31,7 @@ class ActivityAdapter(val itemsIn: List<Activity>, val activityFragment: Activit
     override fun onBindViewHolder(holder: ActivyViewHolder, position: Int){
         val currentActivityItem = items[position]
         holder.itemView.apply {
+            //i
             findViewById<TextView>(R.id.nameEventTxt).text = currentActivityItem.title
             findViewById<TextView>(R.id.dateEventTxt).text = currentActivityItem.date
             //mischien veranderen naar bitmap ipv URI

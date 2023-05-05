@@ -29,7 +29,7 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
     ): View? {
         mAuth = FirebaseAuth.getInstance()
         binding = FragementActivityInfoBinding.inflate(layoutInflater)
-
+        //i
         if( mAuth.currentUser?.uid == activity.postedUser) {
             binding.btnRemove.visibility = View.VISIBLE
         }

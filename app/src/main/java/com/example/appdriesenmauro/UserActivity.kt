@@ -57,7 +57,7 @@ class UserActivity: AppCompatActivity() {
                 val toast = "Please enter an password"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
-
+            //
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
