@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 
 
 class UserActivity: AppCompatActivity() {
@@ -64,15 +65,12 @@ class UserActivity: AppCompatActivity() {
 
                         val toast = "User successfully logged in"
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
 
                     } else {
-
                         val toast = "Failed, make sure that email and password is correct, first time use create account"
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-
                     }
                 }
 

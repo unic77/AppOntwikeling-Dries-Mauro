@@ -87,7 +87,7 @@ class CreateAccountActivity: AppCompatActivity() {
                             val toast = "User successfully created"
                             Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                             uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, WaitActivity::class.java)
                             startActivity(intent)
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
