@@ -21,7 +21,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
-import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         storage = Firebase.storage
         val localFile = File.createTempFile(mAuth.currentUser!!.uid,".jpg")
         val pathRefrenc = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
+
         /*pathRefrenc.getFile(localFile).onSuccessTask {
             
         }*/
@@ -63,9 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         pfBinding.setImageBitmap(userPfp)
 
-        System.out.println(userPfp)
-        System.out.println("ik ben er uit")
-
         emailBinding.setText(mAuth.currentUser?.email)
 
         //pfBinding.setImageBitmap(user.pfBitmap)
@@ -79,10 +76,17 @@ class MainActivity : AppCompatActivity() {
             mAuth.signOut()
         }
 
-        readSavedEvents()
-        setupActivityListFragment()
-        setupMenuDrawer()
-        setContentView(binding.root)
+
+        pathRefrenc.getFile(localFile).addOnSuccessListener {
+            userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
+            pfBinding.setImageBitmap(userPfp)
+            user = User(mAuth.currentUser!!.uid,true,userPfp)
+            activityFragment = ActivityFragment(user)
+            readSavedEvents()
+            setupActivityListFragment()
+            setupMenuDrawer()
+            setContentView(binding.root)
+        }
     }
 
     fun readSavedEvents(){

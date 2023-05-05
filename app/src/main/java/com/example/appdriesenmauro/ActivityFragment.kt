@@ -72,6 +72,7 @@ class ActivityFragment(user: User) : Fragment(R.layout.fragment_activity) {
     fun addActivity(activity: Activity){
         sampleActivityItems.add(activity)
         adapter.notifyItemInserted(sampleActivityItems.size - 1)
+        //i
     }
 
     fun addSavedActivity(activity: Activity){

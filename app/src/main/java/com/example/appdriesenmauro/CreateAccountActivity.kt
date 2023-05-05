@@ -73,8 +73,10 @@ class CreateAccountActivity: AppCompatActivity() {
                 }
 
                 if (password.count() <= 6) {
-                    // met commit weg halen
-                    //throw ownException("password must be higher than 6 char")
+
+
+                    throw ownException("password must be higher than 6 char")
+
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->

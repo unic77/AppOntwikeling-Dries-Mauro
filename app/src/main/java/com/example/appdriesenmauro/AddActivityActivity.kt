@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -32,7 +33,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     private var mainActivity = mainActivity
     private var userId = user.user_ID
     private var user = user
-    private lateinit var mAuth: FirebaseAuth;
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var gebruiker: FirebaseAuth
 
 
@@ -44,6 +45,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     ): View? {
         binding = ActivityAddactivityBinding.inflate(layoutInflater)
 
+        mAuth = FirebaseAuth.getInstance()
 
         binding.btnAddImage.setOnClickListener{
             pickImage()
@@ -75,7 +77,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             ) { view3, year, month, day ->
                 val month = month + 1
                 date = "$day/$month/$year"
-
+                //i
             }
 
             var context = binding.txtContextEvent.text.toString()
@@ -102,9 +104,12 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
 
             try {
+                System.out.println("Dit werkt of dit werkt niet!!")
                 var fileName = name + mAuth.uid
+                System.out.println(fileName)
                 fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
                 fileOutputStream.write(activityJson.toByteArray())
+                System.out.println("Dit UWU UWU UWU tiD!")
                 val toast = "Event Saved"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
