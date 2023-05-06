@@ -18,7 +18,6 @@ import com.example.appdriesenmauro.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -32,27 +31,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuBarToggle: ActionBarDrawerToggle
     private lateinit var activityFragment: ActivityFragment
     private lateinit var user: User
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var storage: FirebaseStorage
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        mAuth = FirebaseAuth.getInstance()
+        val mAuth = FirebaseAuth.getInstance()
 
         //byteArray omzetten naar bitmap
 
-        var userPfp: Bitmap? = null
+        var userPfp: Bitmap?
 
-        storage = Firebase.storage
+        val storage = Firebase.storage
         val localFile = File.createTempFile(mAuth.currentUser!!.uid,".jpg")
         val pathRefrenc = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
-
-        /*pathRefrenc.getFile(localFile).onSuccessTask {
-            
-        }*/
         userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
 
 
@@ -66,8 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         emailBinding.setText(mAuth.currentUser?.email)
 
-        //pfBinding.setImageBitmap(user.pfBitmap)
-
         user = User(mAuth.currentUser!!.uid,true,userPfp)
         activityFragment = ActivityFragment(user)
 
@@ -77,10 +68,10 @@ class MainActivity : AppCompatActivity() {
             mAuth.signOut()
         }
 
-
         pathRefrenc.getFile(localFile).addOnSuccessListener {
             userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
             pfBinding.setImageBitmap(userPfp)
+            localFile.delete()
             user = User(mAuth.currentUser!!.uid,true,userPfp)
             activityFragment = ActivityFragment(user)
 
@@ -92,27 +83,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun readSavedEvents(){
-        var files: Array<String>? = fileList()
+
+    fun readSavedEvents(){
+        val files: Array<String>? = fileList()
+
         if (files != null) {
             for (item in files) {
 
-                var fileInputStream : FileInputStream? = null
+                var fileInputStream : FileInputStream?
                 fileInputStream = openFileInput(item)
-                var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
+                val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
                 val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
 
                 val stringBuilder: StringBuilder = StringBuilder()
                 var text: String? = null
 
-                while ({text = bufferedReader.readLine(); text}() != null){
+                while (run {
+                        text = bufferedReader.readLine()
+                        text
+                    } != null){
                     stringBuilder.append(text)
                 }
 
-                var jsonString = stringBuilder.toString()
+                val jsonString = stringBuilder.toString()
                 val gson = Gson()
 
-                var opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
+
+                val opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
 
                 System.out.print("Print hier de byteArray: ")
                 System.out.println(opgeslagenEvent.dataForStorage)

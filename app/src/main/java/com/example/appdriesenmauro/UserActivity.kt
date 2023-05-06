@@ -24,10 +24,10 @@ class UserActivity: AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = Firebase.auth
         val currentUser = mAuth.currentUser
-        //if(currentUser != null){
-           //val intent = Intent(this, MainActivity::class.java)
-            //startActivity(intent)
-        //}
+        if(currentUser != null){
+           val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -37,8 +37,6 @@ class UserActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         mAuth = Firebase.auth
-
-
 
         binding.loginBtn.setOnClickListener{
 

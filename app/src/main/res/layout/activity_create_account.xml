@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/CreateAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <Button
         android:id="@+id/btnCreatAccount"
@@ -13,10 +13,10 @@
         android:text="create account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.939" />
+        app:layout_constraintVertical_bias="0.94" />
 
     <TextView
         android:id="@+id/txtvCreatAccount"
@@ -26,6 +26,7 @@
         android:scaleX="3"
         android:scaleY="3"
         android:text="Create new account"
+        android:fontFamily="sans-serif-black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
@@ -51,13 +52,14 @@
         android:layout_width="20dp"
         android:layout_height="30dp"
         android:gravity="center"
+        android:fontFamily="sans-serif-black"
         android:text="or"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnTakeFoto"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toEndOf="@+id/btnGetFotoLibrary"
         app:layout_constraintTop_toBottomOf="@+id/iVProfileFoto"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintVertical_bias="0.051" />
 
     <Button
         android:id="@+id/btnGetFotoLibrary"
@@ -87,6 +89,7 @@
         android:layout_height="77dp"
         android:layout_marginTop="4dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="enter pasword"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/cbCompentents"
@@ -111,11 +114,15 @@
         android:layout_width="222dp"
         android:layout_height="77dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="Email adress"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtvCreatAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/txtvCreatAccount"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
