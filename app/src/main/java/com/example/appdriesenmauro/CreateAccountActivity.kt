@@ -102,7 +102,7 @@ class CreateAccountActivity: AppCompatActivity() {
                         }
                     }
 
-                uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
+                //uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
 
 
 

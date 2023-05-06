@@ -90,7 +90,11 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             data?.compress(Bitmap.CompressFormat.PNG, 90, stream)
             val image = stream.toByteArray()
 
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image)
+            //profielfoto opslaan als byteArray
+            user.pfBitmap?.compress(Bitmap.CompressFormat.PNG,90,stream)
+            val PFimage = stream.toByteArray()
+
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image,PFimage)
 
 
             activityFragment.addActivity(activity)
@@ -109,7 +113,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
                 System.out.println(fileName)
                 fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
                 fileOutputStream.write(activityJson.toByteArray())
-                System.out.println("Dit UWU UWU UWU tiD!")
+                System.out.println("Testtest123testtest")
                 val toast = "Event Saved"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }

@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+        //byteArray omzetten naar bitmap
 
         var userPfp: Bitmap? = null
 
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() {
             pfBinding.setImageBitmap(userPfp)
             user = User(mAuth.currentUser!!.uid,true,userPfp)
             activityFragment = ActivityFragment(user)
+
+
             readSavedEvents()
             setupActivityListFragment()
             setupMenuDrawer()
@@ -89,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun readSavedEvents(){
+    private fun readSavedEvents(){
         var files: Array<String>? = fileList()
         if (files != null) {
             for (item in files) {
@@ -109,13 +112,18 @@ class MainActivity : AppCompatActivity() {
                 var jsonString = stringBuilder.toString()
                 val gson = Gson()
 
-
-
                 var opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
+
+                System.out.print("Print hier de byteArray: ")
+                System.out.println(opgeslagenEvent.dataForStorage)
+
+                opgeslagenEvent.data = BitmapFactory.decodeByteArray(opgeslagenEvent.dataForStorage, 0 ,opgeslagenEvent.dataForStorage!!.size)
+                opgeslagenEvent.pfUser = BitmapFactory.decodeByteArray(opgeslagenEvent.dataForPFStorage, 0, opgeslagenEvent.dataForPFStorage!!.size)
 
                 activityFragment.addSavedActivity(opgeslagenEvent)
             }
         }
+        System.out.println("Ik geraak hier!!!")
     }
 
     private fun setupActivityListFragment() {
