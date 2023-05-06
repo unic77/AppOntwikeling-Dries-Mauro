@@ -38,27 +38,21 @@ class UserActivity: AppCompatActivity() {
 
         mAuth = Firebase.auth
 
-
-
         binding.loginBtn.setOnClickListener{
 
             val email = binding.emailadress.text.toString()
-            val name = binding.Usernametxt.text.toString()
             val password = binding.Passporttxt.text.toString()
 
             if (TextUtils.isEmpty(email)){
                 val toast = "Please enter an email adress"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
-            if (TextUtils.isEmpty(name)){
-                val toast = "Please enter a name"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-            }
+
             if (TextUtils.isEmpty(password)){
                 val toast = "Please enter an password"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
-            //
+
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {

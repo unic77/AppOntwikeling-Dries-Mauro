@@ -13,4 +13,5 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name = "loadingBal"><item name ="android:drawable">@drawable/ball_1_1s_222px</item></style>
 </resources>

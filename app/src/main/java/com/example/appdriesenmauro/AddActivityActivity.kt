@@ -2,8 +2,10 @@ package com.example.appdriesenmauro
 
 
 import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,8 +16,9 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.util.*
@@ -27,10 +30,12 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
     private var activityFragment = activityFragmentIn
     private var data: Bitmap? = null
     private lateinit var date: String
-    private lateinit var mAuth: FirebaseAuth;
-    private lateinit var gebruiker: FirebaseAuth
     private var mainActivity = mainActivity
+    private var userId = user.user_ID
     private var user = user
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var gebruiker: FirebaseAuth
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -79,9 +84,15 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
             var favorite = false
 
-            var userId = mAuth.currentUser?.uid
 
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,null)
+            //foto van het event word opgeslagen als een BYTEARRAY en wnr we deze nodig hebben zetten we deze om naar een bitmap
+            val stream = ByteArrayOutputStream()
+            data?.compress(Bitmap.CompressFormat.PNG, 90, stream)
+            val image = stream.toByteArray()
+
+            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image)
+
+
             activityFragment.addActivity(activity)
 
             //opslaan met behulp van Gson en Json
@@ -93,9 +104,12 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
 
             try {
+                System.out.println("Dit werkt of dit werkt niet!!")
                 var fileName = name + mAuth.uid
+                System.out.println(fileName)
                 fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
                 fileOutputStream.write(activityJson.toByteArray())
+                System.out.println("Dit UWU UWU UWU tiD!")
                 val toast = "Event Saved"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }

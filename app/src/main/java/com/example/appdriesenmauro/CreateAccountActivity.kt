@@ -20,9 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.google.firebase.storage.ktx.storage
-import com.google.gson.Gson
-import java.net.URI
 
 class CreateAccountActivity: AppCompatActivity() {
 
@@ -35,15 +32,15 @@ class CreateAccountActivity: AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
-        //if(currentUser != null){
-            //val intent = Intent(this, MainActivity::class.java)
-            //startActivity(intent)
-        //}
+        if(currentUser != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
+        //try {
             binding = ActivityCreateAccountBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
@@ -61,25 +58,25 @@ class CreateAccountActivity: AppCompatActivity() {
             binding.btnCreatAccount.setOnClickListener {
 
                 val email = binding.Txtemail.text.toString()
-                val name = binding.plainTxtName.text.toString()
                 val password = binding.txtPassword.text.toString()
 
                 if (TextUtils.isEmpty(email)) {
                     val toast = "Please enter an email adress"
                     Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                 }
-                if (TextUtils.isEmpty(name)) {
-                    val toast = "Please enter a name"
-                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                }
                 if (TextUtils.isEmpty(password)) {
                     val toast = "Please enter an password"
                     Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                 }
+                var compatence = false
+                if (binding.cbCompentents.isChecked) {
+                    compatence = true
+                }
+                if (password.count() < 6) {
 
-                if (password.count() <= 6) {
+
                     throw ownException("password must be higher than 6 char")
-                    //i
+
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
@@ -105,20 +102,8 @@ class CreateAccountActivity: AppCompatActivity() {
                         }
                     }
 
-                //oude code voor het inloggen
-
-                var compatence = false
-                if (binding.cbCompentents.isChecked) {
-                    compatence = true
-                }
-
             }
-        }
-        catch(e: ownException){
-            System.out.println("ik ben hier")
-            val toast = "account has not been created,${e.message}"
-            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-        }
+        //}
     }
 
     private fun takeImage(){
@@ -166,4 +151,6 @@ class CreateAccountActivity: AppCompatActivity() {
             return@Continuation filRef.downloadUrl
         })
     }
+
+
 }

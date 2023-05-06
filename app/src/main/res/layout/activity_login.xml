@@ -28,12 +28,11 @@
         android:gravity="center"
         android:hint="email adress"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/Usernametxt"
+        app:layout_constraintBottom_toTopOf="@+id/Passporttxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logintxt"
-        app:layout_constraintVertical_bias="0.621" />
+        app:layout_constraintTop_toBottomOf="@+id/logintxt" />
 
     <EditText
         android:id="@+id/Passporttxt"
@@ -61,20 +60,6 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Passporttxt" />
-
-    <EditText
-        android:id="@+id/Usernametxt"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="username"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/Passporttxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/ortxt"
