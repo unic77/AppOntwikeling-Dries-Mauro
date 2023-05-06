@@ -2,16 +2,13 @@ package com.example.appdriesenmauro
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.provider.CalendarContract.Instances
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.appdriesenmauro.databinding.FragementActivityInfoBinding
 import com.google.firebase.auth.FirebaseAuth
-import java.time.Instant
+import java.io.File
 
 class MoreInfoFragment(activity: Activity, user: User,activityFragment: ActivityFragment,mainActivity: MainActivity) : Fragment(R.layout.fragement__activity_info){
     private lateinit var binding : FragementActivityInfoBinding
@@ -47,7 +44,10 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 .setPositiveButton("Yes, delete the event"){dialogInterface,it ->
                     mainActivity.switchTo(activityFragment);
                     activityFragment.removeItem(activity)
-                    //.delete()     moet nog gebeuren
+                    /*
+                    val file = File()
+                    if (file.exists()) file.delete()
+                    deletefile()*/
                 }
                 .setNegativeButton("Don't delete!!!"){dialogInterface,it ->
                 }
@@ -64,5 +64,16 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
         binding.txtDate.text =  date
 
         return binding.root
+    }
+    private fun deletefile(){
+        var files: Array<String>? = fileList()
+        if (files != null){
+            for (item in files) {
+                var x = activity.title + mAuth.uid
+                if (item == x){
+                    item.
+                }
+            }
+        }
     }
 }

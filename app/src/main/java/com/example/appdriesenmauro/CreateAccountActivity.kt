@@ -114,8 +114,6 @@ class CreateAccountActivity: AppCompatActivity() {
                     compatence = true
                 }
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
 
             }
         }finally {

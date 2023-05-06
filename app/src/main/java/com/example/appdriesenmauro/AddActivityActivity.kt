@@ -91,8 +91,9 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             val image = stream.toByteArray()
 
             //profielfoto opslaan als byteArray
-            user.pfBitmap?.compress(Bitmap.CompressFormat.PNG,90,stream)
-            val PFimage = stream.toByteArray()
+            val stream1 = ByteArrayOutputStream()
+            user.pfBitmap?.compress(Bitmap.CompressFormat.PNG,90,stream1)
+            val PFimage = stream1.toByteArray()
 
             var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image,PFimage)
 
