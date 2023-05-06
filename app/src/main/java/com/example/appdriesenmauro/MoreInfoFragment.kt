@@ -44,10 +44,8 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 .setPositiveButton("Yes, delete the event"){dialogInterface,it ->
                     mainActivity.switchTo(activityFragment);
                     activityFragment.removeItem(activity)
-                    /*
-                    val file = File()
-                    if (file.exists()) file.delete()
-                    deletefile()*/
+
+                    deletefile()
                 }
                 .setNegativeButton("Don't delete!!!"){dialogInterface,it ->
                 }
@@ -66,14 +64,8 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
         return binding.root
     }
     private fun deletefile(){
-        var files: Array<String>? = fileList()
-        if (files != null){
-            for (item in files) {
-                var x = activity.title + mAuth.uid
-                if (item == x){
-                    item.
-                }
-            }
-        }
+        val filename = activity.title + mAuth.uid.toString()
+        val file = File("/data/data/com.example.appdriesenmauro/files/" + filename)
+        if (file.exists()) file.delete()
     }
 }
