@@ -77,7 +77,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             ) { view3, year, month, day ->
                 val month = month + 1
                 date = "$day/$month/$year"
-                //i
             }
 
             var context = binding.txtContextEvent.text.toString()
@@ -109,12 +108,10 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
 
             try {
-                System.out.println("Dit werkt of dit werkt niet!!")
                 var fileName = name + mAuth.uid
                 System.out.println(fileName)
                 fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
                 fileOutputStream.write(activityJson.toByteArray())
-                System.out.println("Testtest123testtest")
                 val toast = "Event Saved"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }

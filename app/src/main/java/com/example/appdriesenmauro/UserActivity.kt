@@ -56,7 +56,6 @@ class UserActivity: AppCompatActivity() {
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
                         val toast = "User successfully logged in"
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)

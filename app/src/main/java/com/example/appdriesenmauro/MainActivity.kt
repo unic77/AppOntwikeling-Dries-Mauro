@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity() {
             setupActivityListFragment()
             setupMenuDrawer()
             setContentView(binding.root)
+        }.addOnFailureListener{
+            mAuth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

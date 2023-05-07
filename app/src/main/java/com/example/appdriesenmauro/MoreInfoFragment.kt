@@ -65,7 +65,7 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
 
         return binding.root
     }
-    private fun deletefile(){
+    /*private fun deletefile(){
         var files: Array<String>? = fileList()
         if (files != null){
             for (item in files) {
@@ -75,5 +75,5 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 }
             }
         }
-    }
+    }*/
 }

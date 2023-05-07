@@ -1,5 +1,6 @@
 package com.example.appdriesenmauro
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
@@ -40,12 +41,12 @@ class CreateAccountActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //try {
             binding = ActivityCreateAccountBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
             mAuth = Firebase.auth
-            FStorage = FirebaseStorage.getInstance().getReferenceFromUrl("gs://appmaurodries.appspot.com/profilePic")
+            FStorage = FirebaseStorage.getInstance()
+                .getReferenceFromUrl("gs://appmaurodries.appspot.com/profilePic")
 
             binding.btnGetFotoLibrary.setOnClickListener {
                 pickImage()
@@ -59,31 +60,39 @@ class CreateAccountActivity: AppCompatActivity() {
 
                 val email = binding.Txtemail.text.toString()
                 val password = binding.txtPassword.text.toString()
-
+                if (imageBitmap == null) {
+                    makeToast("pleas pick a photo")
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("there was no image selecter.\n" + "pleas select an image").setCancelable(true)
+                        .setPositiveButton("OK"){dialogInterface,it ->
+                            val intent = Intent(this, CreateAccountActivity::class.java)
+                            startActivity(intent)
+                        }.show()
+                }
                 if (TextUtils.isEmpty(email)) {
-                    val toast = "Please enter an email adress"
-                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                    makeToast("Please enter an email address")
                 }
                 if (TextUtils.isEmpty(password)) {
-                    val toast = "Please enter an password"
-                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                }
-                var compatence = false
-                if (binding.cbCompentents.isChecked) {
-                    compatence = true
+                    makeToast("Please enter an email address")
                 }
                 if (password.count() < 6) {
-
-
-                    throw ownException("password must be higher than 6 char")
-
+                    makeToast("password must be more than 6 char")
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val toast = "User successfully created"
                             Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                            uploadProfileImage(Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver,imageBitmap,mAuth.currentUser?.uid,null)))
+                            uploadProfileImage(
+                                Uri.parse(
+                                    MediaStore.Images.Media.insertImage(
+                                        applicationContext.contentResolver,
+                                        imageBitmap,
+                                        mAuth.currentUser?.uid,
+                                        null
+                                    )
+                                )
+                            )
                             val intent = Intent(this, WaitActivity::class.java)
                             startActivity(intent)
                             // Sign in success, update UI with the signed-in user's information
@@ -134,6 +143,11 @@ class CreateAccountActivity: AppCompatActivity() {
     companion object{
         private val IMAGE_PICK_CODE = 1000
         private val REQUEST_IMAGE_CAPTURE = 1002
+    }
+
+    fun makeToast(toastString: String){
+        val toast = toastString
+        Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
     }
 
     fun uploadProfileImage(photo: Uri){
