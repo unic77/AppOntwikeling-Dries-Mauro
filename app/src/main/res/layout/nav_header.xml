@@ -35,7 +35,7 @@
         android:id="@+id/txtVNameUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not loged in"
+        android:text="Not logged in"
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

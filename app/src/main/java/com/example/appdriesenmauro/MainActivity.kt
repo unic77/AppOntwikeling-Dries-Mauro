@@ -39,13 +39,11 @@ class MainActivity : AppCompatActivity() {
 
         val mAuth = FirebaseAuth.getInstance()
 
-        //byteArray omzetten naar bitmap
-
         var userPfp: Bitmap?
 
         val storage = Firebase.storage
         val localFile = File.createTempFile(mAuth.currentUser!!.uid,".jpg")
-        val pathRefrenc = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
+        val pathReference = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
         userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
 
 
@@ -57,10 +55,10 @@ class MainActivity : AppCompatActivity() {
 
         pfBinding.setImageBitmap(userPfp)
 
-        emailBinding.setText(mAuth.currentUser?.email)
+        emailBinding.text = mAuth.currentUser?.email
 
-        user = User(mAuth.currentUser!!.uid,true,userPfp)
-        activityFragment = ActivityFragment(user)
+        user = User(mAuth.currentUser!!.uid,userPfp)
+        activityFragment = ActivityFragment()
 
         logOutButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
@@ -68,12 +66,12 @@ class MainActivity : AppCompatActivity() {
             mAuth.signOut()
         }
 
-        pathRefrenc.getFile(localFile).addOnSuccessListener {
+        pathReference.getFile(localFile).addOnSuccessListener {
             userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
             pfBinding.setImageBitmap(userPfp)
             localFile.delete()
-            user = User(mAuth.currentUser!!.uid,true,userPfp)
-            activityFragment = ActivityFragment(user)
+            user = User(mAuth.currentUser!!.uid,userPfp)
+            activityFragment = ActivityFragment()
 
 
             readSavedEvents()
@@ -88,16 +86,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun readSavedEvents(){
+    private fun readSavedEvents(){
         val files: Array<String>? = fileList()
 
         if (files != null) {
             for (item in files) {
 
-                var fileInputStream : FileInputStream?
-                fileInputStream = openFileInput(item)
-                val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
-                val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+                val fileInputStream : FileInputStream? = openFileInput(item)
+                val inputStreamReader = InputStreamReader(fileInputStream)
+                val bufferedReader = BufferedReader(inputStreamReader)
 
                 val stringBuilder: StringBuilder = StringBuilder()
                 var text: String? = null
@@ -115,16 +112,12 @@ class MainActivity : AppCompatActivity() {
 
                 val opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
 
-                System.out.print("Print hier de byteArray: ")
-                System.out.println(opgeslagenEvent.dataForStorage)
-
-                opgeslagenEvent.data = BitmapFactory.decodeByteArray(opgeslagenEvent.dataForStorage, 0 ,opgeslagenEvent.dataForStorage!!.size)
-                opgeslagenEvent.pfUser = BitmapFactory.decodeByteArray(opgeslagenEvent.dataForPFStorage, 0, opgeslagenEvent.dataForPFStorage!!.size)
+                opgeslagenEvent.phEvent = BitmapFactory.decodeByteArray(opgeslagenEvent.phEventForStorage, 0 ,opgeslagenEvent.phEventForStorage!!.size)
+                opgeslagenEvent.pfUser = BitmapFactory.decodeByteArray(opgeslagenEvent.pfUserForStorage, 0, opgeslagenEvent.pfUserForStorage!!.size)
 
                 activityFragment.addSavedActivity(opgeslagenEvent)
             }
         }
-        System.out.println("Ik geraak hier!!!")
     }
 
     private fun setupActivityListFragment() {
@@ -144,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.btnLogOut -> goToProfile()
                 R.id.mnuHome -> goToHome()
                 R.id.mnuFavourites -> goToFavourites()
                 R.id.mnuAddActivity -> goTOAddActivity()
@@ -155,13 +147,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    private fun goToProfile() {
-        val snak = Snackbar.make(binding.root, "dries is gay", Snackbar.LENGTH_LONG)
-        snak.show()
-        binding.drawerLayout.closeDrawer(Gravity.LEFT)
-    }
-
     private fun goToHome() {
         binding.drawerLayout.closeDrawer(Gravity.LEFT)
         activityFragment.switchFiewToHome()
@@ -169,8 +154,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun gotToSupport(){
         binding.drawerLayout.closeDrawer(Gravity.LEFT)
-        val snak = Snackbar.make(binding.root, "support not online", Snackbar.LENGTH_LONG)
-        snak.show()
+        val snack = Snackbar.make(binding.root, "support not online", Snackbar.LENGTH_LONG)
+        snack.show()
     }
 
     private fun goToFavourites(){

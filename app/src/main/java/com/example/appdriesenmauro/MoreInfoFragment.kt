@@ -5,19 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.FragementActivityInfoBinding
 import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 
-class MoreInfoFragment(activity: Activity, user: User,activityFragment: ActivityFragment,mainActivity: MainActivity) : Fragment(R.layout.fragement__activity_info){
+class MoreInfoFragment(
+    private var activity: Activity,
+    private var activityFragment: ActivityFragment,
+    private val mainActivity: MainActivity
+) : Fragment(R.layout.fragement_activity_info){
     private lateinit var binding : FragementActivityInfoBinding
     private lateinit var builder : AlertDialog.Builder
     private lateinit var mAuth: FirebaseAuth;
-    private var activityFragment = activityFragment
-    private val mainActivity = mainActivity
-    private var activity = activity
-    private val user = user
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,18 +45,16 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
                 .setPositiveButton("Yes, delete the event"){dialogInterface,it ->
                     mainActivity.switchTo(activityFragment);
                     activityFragment.removeItem(activity)
-                    /*
-                    val file = File()
-                    if (file.exists()) file.delete()
-                    deletefile()*/
+
+                    deleteFile()
                 }
-                .setNegativeButton("Don't delete!!!"){dialogInterface,it ->
+                .setNegativeButton("Don't delete!"){dialogInterface,it ->
                 }
                 .show()
         }
 
-        if(activity.data != null) {
-            binding.imvHeadFoto.setImageBitmap(activity.data)
+        if(activity.phEvent != null) {
+            binding.imvHeadFoto.setImageBitmap(activity.phEvent)
         }
 
         binding.txtName.text = activity.title
@@ -65,15 +64,9 @@ class MoreInfoFragment(activity: Activity, user: User,activityFragment: Activity
 
         return binding.root
     }
-    /*private fun deletefile(){
-        var files: Array<String>? = fileList()
-        if (files != null){
-            for (item in files) {
-                var x = activity.title + mAuth.uid
-                if (item == x){
-                    item.
-                }
-            }
-        }
-    }*/
+    private fun deleteFile(){
+        val filename = activity.title + mAuth.uid.toString()
+        val file = File("/data/data/com.example.appdriesenmauro/files/" + filename)
+        if (file.exists()) file.delete()
+    }
 }

@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">event-planer</string>
+    <string name="app_name">event-planner</string>
     <string name="close_menu">iets</string>
     <string name="open_menu">heey</string>
     <string name="dialog_remove" />
     <string name="dialog_do_you_want_to_remove" />
     <string name="dialog_cancel" />
-    <string name="remove_activitie">remove activitie</string>
+    <string name="remove_activitie">remove activities</string>
     <string name="remove">remove</string>
 </resources>

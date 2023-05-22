@@ -12,21 +12,21 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ActivityFragment(private val user: User) : Fragment(R.layout.fragment_activity) {
+class ActivityFragment() : Fragment(R.layout.fragment_activity) {
 
     private lateinit var binding : FragmentActivityBinding
     private var sampleActivityItems = ArrayList<Activity>()
     private var favoriteActivityItems = ArrayList<Activity>()
     private lateinit var adapter: ActivityAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentActivityBinding.inflate(layoutInflater)
         val main = activity as MainActivity
-        adapter = ActivityAdapter(sampleActivityItems,this,main,user)
+        adapter = ActivityAdapter(sampleActivityItems,this,main)
         binding.rvwAcivity.adapter = adapter
         binding.rvwAcivity.layoutManager = LinearLayoutManager(this.context)
-        val SearchView = binding.idSV
-        SearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
+        val searchView = binding.idSV
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -68,7 +68,6 @@ class ActivityFragment(private val user: User) : Fragment(R.layout.fragment_acti
     fun addActivity(activity: Activity){
         sampleActivityItems.add(activity)
         adapter.notifyItemInserted(sampleActivityItems.size - 1)
-        //i
     }
 
     fun addSavedActivity(activity: Activity){
@@ -84,8 +83,8 @@ class ActivityFragment(private val user: User) : Fragment(R.layout.fragment_acti
         }
         if (filteredlist.isEmpty()) {
             adapter.filterList(filteredlist)
-            val toast = "no event found with that name"
-            Snackbar.make(binding.root,toast, Snackbar.LENGTH_SHORT).show()
+            /*val toast = "no event found with that name"
+            Snackbar.make(binding.root,toast, Snackbar.LENGTH_SHORT).show()*/
         } else {
             adapter.filterList(filteredlist)
         }

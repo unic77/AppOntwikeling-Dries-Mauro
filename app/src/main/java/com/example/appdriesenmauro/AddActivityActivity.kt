@@ -5,7 +5,6 @@ import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,7 +15,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -24,17 +22,14 @@ import java.io.FileOutputStream
 import java.util.*
 
 
-class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: MainActivity,user: User): Fragment(R.layout.activity_addactivity) {
+class AddActivityActivity(activityFragmentIn: ActivityFragment, private var mainActivity: MainActivity, private var user: User): Fragment(R.layout.activity_addactivity) {
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
-    private var data: Bitmap? = null
+    private var phEvent: Bitmap? = null
     private lateinit var date: String
-    private var mainActivity = mainActivity
     private var userId = user.user_ID
-    private var user = user
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var gebruiker: FirebaseAuth
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -42,7 +37,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ActivityAddactivityBinding.inflate(layoutInflater)
 
         mAuth = FirebaseAuth.getInstance()
@@ -79,14 +74,12 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
                 date = "$day/$month/$year"
             }
 
-            var context = binding.txtContextEvent.text.toString()
-
-            var favorite = false
+            val context = binding.txtContextEvent.text.toString()
 
 
             //foto van het event word opgeslagen als een BYTEARRAY en wnr we deze nodig hebben zetten we deze om naar een bitmap
             val stream = ByteArrayOutputStream()
-            data?.compress(Bitmap.CompressFormat.PNG, 90, stream)
+            phEvent?.compress(Bitmap.CompressFormat.PNG, 90, stream)
             val image = stream.toByteArray()
 
             //profielfoto opslaan als byteArray
@@ -94,7 +87,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
             user.pfBitmap?.compress(Bitmap.CompressFormat.PNG,90,stream1)
             val PFimage = stream1.toByteArray()
 
-            var activity = Activity(name, date, context,data,user.pfBitmap,userId,favorite,image,PFimage)
+            val activity = Activity(name, date, context,phEvent,user.pfBitmap,userId,false,image,PFimage)
 
 
             activityFragment.addActivity(activity)
@@ -108,8 +101,7 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
 
             try {
-                var fileName = name + mAuth.uid
-                System.out.println(fileName)
+                val fileName = name + mAuth.uid
                 fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
                 fileOutputStream.write(activityJson.toByteArray())
                 val toast = "Event Saved"
@@ -135,8 +127,8 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, mainActivity: Ma
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data2: Intent?) {
         //https://www.youtube.com/watch?v=gd300jxLEe0&ab_channel=AtifPervaiz
-        data = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
-        binding.imageTopOfInfoPage.setImageBitmap(data)
+        phEvent = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
+        binding.imageTopOfInfoPage.setImageBitmap(phEvent)
     }
 
     companion object{

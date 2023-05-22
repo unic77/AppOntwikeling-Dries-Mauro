@@ -25,13 +25,12 @@ import com.google.firebase.storage.UploadTask
 class CreateAccountActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateAccountBinding
-    private var imageBitmap: Bitmap? = null
+    private var pfUser: Bitmap? = null
     private lateinit var mAuth: FirebaseAuth
     private lateinit var FStorage: StorageReference
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
         if(currentUser != null){
             val intent = Intent(this, MainActivity::class.java)
@@ -45,6 +44,7 @@ class CreateAccountActivity: AppCompatActivity() {
             setContentView(binding.root)
 
             mAuth = Firebase.auth
+
             FStorage = FirebaseStorage.getInstance()
                 .getReferenceFromUrl("gs://appmaurodries.appspot.com/profilePic")
 
@@ -60,23 +60,23 @@ class CreateAccountActivity: AppCompatActivity() {
 
                 val email = binding.Txtemail.text.toString()
                 val password = binding.txtPassword.text.toString()
-                if (imageBitmap == null) {
-                    makeToast("pleas pick a photo")
+                if (pfUser == null) {
+                    makeToast("pick a photo")
                     val builder = AlertDialog.Builder(this)
-                    builder.setTitle("there was no image selecter.\n" + "pleas select an image").setCancelable(true)
+                    builder.setTitle("there was no image selected.\n" + "select an image").setCancelable(true)
                         .setPositiveButton("OK"){dialogInterface,it ->
                             val intent = Intent(this, CreateAccountActivity::class.java)
                             startActivity(intent)
                         }.show()
                 }
                 if (TextUtils.isEmpty(email)) {
-                    makeToast("Please enter an email address")
+                    makeToast("enter an email address")
                 }
                 if (TextUtils.isEmpty(password)) {
-                    makeToast("Please enter an email address")
+                    makeToast("enter an email address")
                 }
                 if (password.count() < 6) {
-                    makeToast("password must be more than 6 char")
+                    makeToast("password must be more than 6 letters")
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
@@ -87,7 +87,7 @@ class CreateAccountActivity: AppCompatActivity() {
                                 Uri.parse(
                                     MediaStore.Images.Media.insertImage(
                                         applicationContext.contentResolver,
-                                        imageBitmap,
+                                        pfUser,
                                         mAuth.currentUser?.uid,
                                         null
                                     )
@@ -130,13 +130,13 @@ class CreateAccountActivity: AppCompatActivity() {
 
         if(requestCode == IMAGE_PICK_CODE) {
             val dataUri = data?.data
-            imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver,dataUri)
-            binding.iVProfileFoto.setImageBitmap(imageBitmap)
+            pfUser = MediaStore.Images.Media.getBitmap(contentResolver,dataUri)
+            binding.iVProfileFoto.setImageBitmap(pfUser)
         }
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.iVProfileFoto.setImageBitmap(imageBitmap)
+            pfUser = data?.extras?.get("data") as Bitmap
+            binding.iVProfileFoto.setImageBitmap(pfUser)
         }
     }
 
@@ -145,17 +145,16 @@ class CreateAccountActivity: AppCompatActivity() {
         private val REQUEST_IMAGE_CAPTURE = 1002
     }
 
-    fun makeToast(toastString: String){
+    private fun makeToast(toastString: String){
         val toast = toastString
         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun uploadProfileImage(photo: Uri){
+    private fun uploadProfileImage(photo: Uri){
         val filRef = FStorage.child(mAuth.currentUser?.uid + ".jpg")
         val uploadTask = filRef.putFile(photo)
 
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-            System.out.println("succes")
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it

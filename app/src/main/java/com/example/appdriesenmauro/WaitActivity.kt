@@ -9,8 +9,7 @@ class WaitActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wait)
-        Handler().postDelayed(Runnable {
-
+        Handler().postDelayed({
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
             finish()

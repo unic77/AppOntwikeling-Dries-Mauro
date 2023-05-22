@@ -9,8 +9,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
-import kotlinx.coroutines.delay
 
 
 class UserActivity: AppCompatActivity() {
@@ -21,7 +19,6 @@ class UserActivity: AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = Firebase.auth
         val currentUser = mAuth.currentUser
         if(currentUser != null){
@@ -44,12 +41,12 @@ class UserActivity: AppCompatActivity() {
             val password = binding.Passporttxt.text.toString()
 
             if (TextUtils.isEmpty(email)){
-                val toast = "Please enter an email adress"
+                val toast = "enter an email address"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
 
             if (TextUtils.isEmpty(password)){
-                val toast = "Please enter an password"
+                val toast = "enter a password"
                 Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
             }
 
@@ -62,7 +59,7 @@ class UserActivity: AppCompatActivity() {
                         startActivity(intent)
 
                     } else {
-                        val toast = "Failed, make sure that email and password is correct, first time use create account"
+                        val toast = "Failed, make sure that email and password is correct"
                         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                     }
                 }

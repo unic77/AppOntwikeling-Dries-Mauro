@@ -16,23 +16,23 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94" />
+        app:layout_constraintVertical_bias="0.938" />
 
     <TextView
         android:id="@+id/txtvCreatAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:scaleX="3"
         android:scaleY="3"
         android:text="Create new account"
-        android:fontFamily="sans-serif-black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <ImageView
         android:id="@+id/iVProfileFoto"
@@ -41,47 +41,47 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/btnTakeFoto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        app:layout_constraintVertical_bias="0.78"
+        app:layout_constraintVertical_bias="0.522"
         app:srcCompat="@drawable/ic_launcher_foreground" />
-
-    <TextView
-        android:id="@+id/ortxt3"
-        android:layout_width="20dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:fontFamily="sans-serif-black"
-        android:text="or"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnTakeFoto"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toEndOf="@+id/btnGetFotoLibrary"
-        app:layout_constraintTop_toBottomOf="@+id/iVProfileFoto"
-        app:layout_constraintVertical_bias="0.051" />
-
-    <Button
-        android:id="@+id/btnGetFotoLibrary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="from foto's"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
 
     <Button
         android:id="@+id/btnTakeFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="32dp"
         android:text=" take foto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.715" />
+
+    <Button
+        android:id="@+id/btnGetFotoLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="from foto's"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.715" />
+
+    <TextView
+        android:id="@+id/ortxt3"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="or"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnTakeFoto"
+        app:layout_constraintHorizontal_bias="0.581"
+        app:layout_constraintStart_toEndOf="@+id/btnGetFotoLibrary"
+        app:layout_constraintTop_toBottomOf="@+id/iVProfileFoto"
+        app:layout_constraintVertical_bias="0.157" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -92,22 +92,12 @@
         android:gravity="center"
         android:hint="enter pasword"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/cbCompentents"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtvCreatAccount"
-        app:layout_constraintVertical_bias="0.436" />
-
-    <CheckBox
-        android:id="@+id/cbCompentents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compentents"
-        app:layout_constraintBottom_toTopOf="@+id/btnCreatAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetFotoLibrary" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <EditText
         android:id="@+id/Txtemail"
