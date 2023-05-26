@@ -16,13 +16,13 @@
         android:theme="@style/Theme.AppDriesEnMauro"
         tools:targetApi="31">
 
-        <activity android:name=".AddActivityActivity" android:exported="true" />
-        <activity android:name=".MainActivity" android:exported="true" />
-        <activity android:name=".WaitActivity" android:exported="true" android:configChanges="uiMode"/>
-        <activity android:name=".CreateAccountActivity" android:exported="true" />
+        <activity android:name=".Acticity.UserActivity" android:exported="true" />
+        <activity android:name=".Acticity.WaitActivity" android:exported="true" android:configChanges="uiMode"/>
+        <activity android:name=".Acticity.CreateAccountActivity" android:exported="true" />
+        <activity android:name=".Acticity.SupportActivity" />
 
         <activity
-            android:name=".UserActivity"
+            android:name=".Acticity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

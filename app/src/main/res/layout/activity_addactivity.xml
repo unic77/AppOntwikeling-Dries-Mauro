@@ -34,7 +34,7 @@
                 android:layout_height="61dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
-                android:text="add image" />
+                android:text="@string/add_image" />
 
             <EditText
                 android:id="@+id/txtNameEvent"
@@ -43,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="Name event"
+                android:hint="@string/name_event"
                 android:inputType="textPersonName" />
 
 
@@ -62,7 +62,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:gravity="top|left"
-                android:hint="tell us a bit more about the event"
+                android:hint="@string/tell_us_a_bit_more_about_the_event"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:scrollHorizontally="false" />
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:text="Publisch event" />
+                android:text="@string/publisch_event" />
 
         </LinearLayout>
     </ScrollView>

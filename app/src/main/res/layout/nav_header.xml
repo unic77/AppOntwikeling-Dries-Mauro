@@ -10,23 +10,27 @@
         android:id="@+id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Out"
+        android:layout_marginStart="28dp"
         android:clickable="true"
+        android:text="@string/log_out"
+        android:outlineSpotShadowColor="@color/white"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.776"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toEndOf="@+id/profileFoto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintVertical_bias="0.315" />
 
     <ImageView
         android:id="@+id/profileFoto"
         android:layout_width="107dp"
         android:layout_height="103dp"
-        android:layout_marginEnd="12dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnLogOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.164"
         app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -35,14 +39,14 @@
         android:id="@+id/txtVNameUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not logged in"
+        android:text="@string/not_logged_in"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profileFoto"
         app:layout_constraintTop_toBottomOf="@+id/btnLogOut"
-        app:layout_constraintVertical_bias="0.674" />
+        app:layout_constraintVertical_bias="0.545" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

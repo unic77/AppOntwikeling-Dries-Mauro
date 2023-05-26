@@ -1,4 +1,4 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Fragment
 
 
 import android.content.Context
@@ -13,6 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.appdriesenmauro.classes.Activity
+import com.example.appdriesenmauro.Acticity.MainActivity
+import com.example.appdriesenmauro.R
+import com.example.appdriesenmauro.classes.User
 import com.example.appdriesenmauro.databinding.ActivityAddactivityBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -22,7 +26,9 @@ import java.io.FileOutputStream
 import java.util.*
 
 
-class AddActivityActivity(activityFragmentIn: ActivityFragment, private var mainActivity: MainActivity, private var user: User): Fragment(R.layout.activity_addactivity) {
+class AddActivityFragment(activityFragmentIn: ActivityFragment, private var mainActivity: MainActivity, private var user: User): Fragment(
+    R.layout.activity_addactivity
+) {
 
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
@@ -75,7 +81,6 @@ class AddActivityActivity(activityFragmentIn: ActivityFragment, private var main
             }
 
             val context = binding.txtContextEvent.text.toString()
-
 
             //foto van het event word opgeslagen als een BYTEARRAY en wnr we deze nodig hebben zetten we deze om naar een bitmap
             val stream = ByteArrayOutputStream()

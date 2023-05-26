@@ -1,12 +1,14 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
+import com.example.appdriesenmauro.classes.Activity
+import com.example.appdriesenmauro.Acticity.MainActivity
+import com.example.appdriesenmauro.R
 import com.example.appdriesenmauro.databinding.FragementActivityInfoBinding
 import com.google.firebase.auth.FirebaseAuth
 import java.io.File

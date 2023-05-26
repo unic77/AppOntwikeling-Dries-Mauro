@@ -1,4 +1,4 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.classes
 
 import android.graphics.Bitmap
 

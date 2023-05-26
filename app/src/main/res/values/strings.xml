@@ -7,4 +7,27 @@
     <string name="dialog_cancel" />
     <string name="remove_activitie">remove activities</string>
     <string name="remove">remove</string>
+    <string name="enter_email">enter email</string>
+    <string name="reset_password">reset password</string>
+    <string name="log_out">Log Out</string>
+    <string name="not_logged_in">Not logged in</string>
+    <string name="more_info">more info</string>
+    <string name="date_event">Date event</string>
+    <string name="name_event">Name event</string>
+    <string name="test">test</string>
+    <string name="creating_account">Creating account</string>
+    <string name="login">LOGIN</string>
+    <string name="email_adress">email adress</string>
+    <string name="password">password</string>
+    <string name="login_in">login in</string>
+    <string name="or">or</string>
+    <string name="create_acount">Create Acount</string>
+    <string name="create_account">create account</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="take_foto">take foto</string>
+    <string name="from_foto_s">from foto\'s</string>
+    <string name="enter_pasword">enter pasword</string>
+    <string name="add_image">add image</string>
+    <string name="tell_us_a_bit_more_about_the_event">tell us a bit more about the event</string>
+    <string name="publisch_event">Publisch event</string>
 </resources>

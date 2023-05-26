@@ -1,5 +1,6 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Acticity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,8 +15,12 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.example.appdriesenmauro.Fragment.ActivityFragment
+import com.example.appdriesenmauro.Fragment.AddActivityFragment
+import com.example.appdriesenmauro.R
+import com.example.appdriesenmauro.classes.Activity
+import com.example.appdriesenmauro.classes.User
 import com.example.appdriesenmauro.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var user: User
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,24 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         var userPfp: Bitmap?
 
-        val storage = Firebase.storage
-        val localFile = File.createTempFile(mAuth.currentUser!!.uid,".jpg")
-        val pathReference = storage.getReference("profilePic/"+mAuth.currentUser!!.uid+".jpg")
-        userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
-
-
         val headerView : View = binding.navView.getHeaderView(0)
+
+        val navMenu = binding.navView.menu
 
         val pfBinding = headerView.findViewById<ImageView>(R.id.profileFoto)
         val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
         val logOutButton = headerView.findViewById<Button>(R.id.btnLogOut)
-
-        pfBinding.setImageBitmap(userPfp)
-
-        emailBinding.text = mAuth.currentUser?.email
-
-        user = User(mAuth.currentUser!!.uid,userPfp)
-        activityFragment = ActivityFragment()
 
         logOutButton.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
@@ -66,25 +61,47 @@ class MainActivity : AppCompatActivity() {
             mAuth.signOut()
         }
 
-        pathReference.getFile(localFile).addOnSuccessListener {
+        if(mAuth.currentUser != null) {
+            val storage = Firebase.storage
+            val localFile = File.createTempFile(mAuth.currentUser!!.uid, ".jpg")
+            val pathReference =
+                storage.getReference("profilePic/" + mAuth.currentUser!!.uid + ".jpg")
             userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
             pfBinding.setImageBitmap(userPfp)
-            localFile.delete()
-            user = User(mAuth.currentUser!!.uid,userPfp)
+
+            emailBinding.text = mAuth.currentUser?.email
+
+            user = User(mAuth.currentUser!!.uid, userPfp)
             activityFragment = ActivityFragment()
 
+            pathReference.getFile(localFile).addOnSuccessListener {
+                userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
+                pfBinding.setImageBitmap(userPfp)
+                localFile.delete()
+                user = User(mAuth.currentUser!!.uid, userPfp)
 
-            readSavedEvents()
-            setupActivityListFragment()
-            setupMenuDrawer()
-            setContentView(binding.root)
-        }.addOnFailureListener{
-            mAuth.signOut()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+                setup()
+            }.addOnFailureListener {
+                mAuth.signOut()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        else{
+            logOutButton.text = "log in"
+            setup()
+            val mnuAddActivity = navMenu.findItem(R.id.mnuAddActivity)
+            mnuAddActivity.isVisible = false
         }
     }
 
+    private fun setup(){
+        activityFragment = ActivityFragment()
+        readSavedEvents()
+        setupActivityListFragment()
+        setupMenuDrawer()
+        setContentView(binding.root)
+    }
 
     private fun readSavedEvents(){
         val files: Array<String>? = fileList()
@@ -110,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                 val gson = Gson()
 
 
-                val opgeslagenEvent = gson.fromJson(jsonString,Activity::class.java)
+                val opgeslagenEvent = gson.fromJson(jsonString, Activity::class.java)
 
                 opgeslagenEvent.phEvent = BitmapFactory.decodeByteArray(opgeslagenEvent.phEventForStorage, 0 ,opgeslagenEvent.phEventForStorage!!.size)
                 opgeslagenEvent.pfUser = BitmapFactory.decodeByteArray(opgeslagenEvent.pfUserForStorage, 0, opgeslagenEvent.pfUserForStorage!!.size)
@@ -128,7 +145,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMenuDrawer() {
-        menuBarToggle = ActionBarDrawerToggle(this,binding.drawerLayout,R.string.open_menu, R.string.close_menu)
+        menuBarToggle = ActionBarDrawerToggle(this,binding.drawerLayout,
+            R.string.open_menu,
+            R.string.close_menu
+        )
         binding.drawerLayout.addDrawerListener(menuBarToggle)
 
         menuBarToggle.syncState()
@@ -154,8 +174,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun gotToSupport(){
         binding.drawerLayout.closeDrawer(Gravity.LEFT)
-        val snack = Snackbar.make(binding.root, "support not online", Snackbar.LENGTH_LONG)
-        snack.show()
+        val intent = Intent(this, SupportActivity::class.java);
+        startActivity(intent)
     }
 
     private fun goToFavourites(){
@@ -165,7 +185,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun goTOAddActivity(){
 
-        val addActivityFragment = AddActivityActivity(activityFragment,this,user);
+        val addActivityFragment = AddActivityFragment(activityFragment,this,user);
         switchTo(addActivityFragment)
         binding.drawerLayout.closeDrawer(GravityCompat.START)
     }

@@ -1,4 +1,4 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Acticity
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
@@ -116,7 +116,7 @@ class CreateAccountActivity: AppCompatActivity() {
 
     private fun takeImage(){
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
     }
     private fun pickImage() {
         val intent = Intent(Intent.ACTION_PICK)

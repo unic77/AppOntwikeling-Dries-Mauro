@@ -1,15 +1,20 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appdriesenmauro.Acticity.MainActivity
+import com.example.appdriesenmauro.Fragment.ActivityFragment
+import com.example.appdriesenmauro.Fragment.MoreInfoFragment
+import com.example.appdriesenmauro.R
+import com.example.appdriesenmauro.classes.Activity
 
 class ActivityAdapter(itemsIn: List<Activity>, private val activityFragment: ActivityFragment, private val mainActivity: MainActivity): RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
 
     inner class ActivityViewHolder(currentItemView: View): RecyclerView.ViewHolder(currentItemView)
-        private lateinit var  view: ActivityAdapter.ActivityViewHolder
+        private lateinit var  view: ActivityViewHolder
         private var items = itemsIn
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ActivityViewHolder {
             view = ActivityViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))

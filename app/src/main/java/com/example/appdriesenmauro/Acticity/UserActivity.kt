@@ -1,4 +1,4 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Acticity
 
 import android.content.Intent
 import android.os.Bundle
@@ -65,6 +65,11 @@ class UserActivity: AppCompatActivity() {
                 }
 
 
+        }
+
+        binding.txtViewVergotPassword.setOnClickListener{
+            val intent = Intent(this, SupportActivity::class.java)
+            startActivity(intent)
         }
 
         binding.createAcountBtn.setOnClickListener{

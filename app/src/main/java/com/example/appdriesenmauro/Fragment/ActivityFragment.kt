@@ -1,4 +1,4 @@
-package com.example.appdriesenmauro
+package com.example.appdriesenmauro.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appdriesenmauro.classes.Activity
+import com.example.appdriesenmauro.adapter.ActivityAdapter
+import com.example.appdriesenmauro.Acticity.MainActivity
+import com.example.appdriesenmauro.R
 import com.example.appdriesenmauro.databinding.FragmentActivityBinding
-import com.google.android.material.snackbar.Snackbar
 import java.util.*
 import kotlin.collections.ArrayList
 
