@@ -64,20 +64,15 @@ class CreateAccountActivity: AppCompatActivity() {
                 val password = binding.txtPassword.text.toString()
                 if (pfUser == null) {
                     makeToast("pick a photo")
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("there was no image selected.\n" + "select an image").setCancelable(true)
-                        .setPositiveButton("OK"){dialogInterface,it ->
-                            val intent = Intent(this, CreateAccountActivity::class.java)
-                            startActivity(intent)
-                        }.show()
                 }
-                if (TextUtils.isEmpty(email)) {
+                else if (TextUtils.isEmpty(email)) {
                     makeToast("enter an email address")
                 }
-                if (TextUtils.isEmpty(password)) {
+                else if (TextUtils.isEmpty(password)) {
                     makeToast("enter an password address")
+
                 }
-                if (password.count() < 6) {
+                else if (password.count() < 6) {
                     makeToast("password must be more than 6 letters")
                 }
 
@@ -123,9 +118,6 @@ class CreateAccountActivity: AppCompatActivity() {
                 }else{
                     makeToast("Connect to the internet before creating an account")
                 }
-
-
-
             }
     }
 
