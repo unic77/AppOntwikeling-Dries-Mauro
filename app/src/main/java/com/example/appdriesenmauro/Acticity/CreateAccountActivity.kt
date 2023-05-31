@@ -62,55 +62,50 @@ class CreateAccountActivity: AppCompatActivity() {
                 val password = binding.txtPassword.text.toString()
                 if (pfUser == null) {
                     makeToast("pick a photo")
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("there was no image selected.\n" + "select an image").setCancelable(true)
-                        .setPositiveButton("OK"){dialogInterface,it ->
-                            val intent = Intent(this, CreateAccountActivity::class.java)
-                            startActivity(intent)
-                        }.show()
                 }
-                if (TextUtils.isEmpty(email)) {
+                else if (TextUtils.isEmpty(email)) {
                     makeToast("enter an email address")
                 }
-                if (TextUtils.isEmpty(password)) {
+                else if (TextUtils.isEmpty(password)) {
                     makeToast("enter an email address")
                 }
-                if (password.count() < 6) {
+                else if (password.count() < 6) {
                     makeToast("password must be more than 6 letters")
                 }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val toast = "User successfully created"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                            uploadProfileImage(
-                                Uri.parse(
-                                    MediaStore.Images.Media.insertImage(
-                                        applicationContext.contentResolver,
-                                        pfUser,
-                                        mAuth.currentUser?.uid,
-                                        null
+                else {
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val toast = "User successfully created"
+                                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                                uploadProfileImage(
+                                    Uri.parse(
+                                        MediaStore.Images.Media.insertImage(
+                                            applicationContext.contentResolver,
+                                            pfUser,
+                                            mAuth.currentUser?.uid,
+                                            null
+                                        )
                                     )
                                 )
-                            )
-                            val intent = Intent(this, WaitActivity::class.java)
-                            startActivity(intent)
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success")
-                        } else {
+                                val intent = Intent(this, WaitActivity::class.java)
+                                startActivity(intent)
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success")
+                            } else {
 
-                            val toast = "Failed to create user"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                                val toast = "Failed to create user"
+                                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
 
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                this, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                Toast.makeText(
+                                    this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
-
+                }
             }
     }
 
