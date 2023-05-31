@@ -1,17 +1,25 @@
 package com.example.appdriesenmauro.Fragment
 
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.ContentValues.TAG
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.appdriesenmauro.classes.Activity
 import com.example.appdriesenmauro.Acticity.MainActivity
@@ -106,11 +114,19 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
 
 
             try {
-                val fileName = name + mAuth.uid
-                fileOutputStream = requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
-                fileOutputStream.write(activityJson.toByteArray())
-                val toast = "Event Saved"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                val permission = this.context?.let { it1 -> ContextCompat.checkSelfPermission(it1,WRITE_EXTERNAL_STORAGE)}
+                if(permission == PackageManager.PERMISSION_GRANTED) {
+                    val fileName = name + mAuth.uid
+                    fileOutputStream =
+                        requireActivity().openFileOutput(fileName, Context.MODE_PRIVATE)
+                    fileOutputStream.write(activityJson.toByteArray())
+                    val toast = "Event Saved"
+                    Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                    mainActivity.switchTo(activityFragment)
+                }
+                else{
+                    Snackbar.make(binding.root, "need local storage permission", Snackbar.LENGTH_SHORT).show()
+                }
             }
             catch (e: FileNotFoundException){
                 e.printStackTrace()
@@ -118,8 +134,6 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
             catch (e: java.lang.Exception){
                 e.printStackTrace()
             }
-
-            mainActivity.switchTo(activityFragment)
         }
         return binding.root
     }
@@ -138,5 +152,6 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
 
     companion object{
         private val IMAGE_PICK_CODE = 1000
+        private val STORAGE_REQUEST_CODE = 101
     }
 }
