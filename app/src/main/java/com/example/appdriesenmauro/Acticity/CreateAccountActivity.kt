@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+
 
 class CreateAccountActivity: AppCompatActivity() {
 
@@ -73,43 +75,56 @@ class CreateAccountActivity: AppCompatActivity() {
                     makeToast("enter an email address")
                 }
                 if (TextUtils.isEmpty(password)) {
-                    makeToast("enter an email address")
+                    makeToast("enter an password address")
                 }
                 if (password.count() < 6) {
                     makeToast("password must be more than 6 letters")
                 }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val toast = "User successfully created"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                            uploadProfileImage(
-                                Uri.parse(
-                                    MediaStore.Images.Media.insertImage(
-                                        applicationContext.contentResolver,
-                                        pfUser,
-                                        mAuth.currentUser?.uid,
-                                        null
+
+                val connManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+                val wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                val mobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+
+                if (wifi!!.isConnected || mobile!!.isConnected) {
+                    //wifi of data connected
+
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val toast = "User successfully created"
+                                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                                uploadProfileImage(
+                                    Uri.parse(
+                                        MediaStore.Images.Media.insertImage(
+                                            applicationContext.contentResolver,
+                                            pfUser,
+                                            mAuth.currentUser?.uid,
+                                            null
+                                        )
                                     )
                                 )
-                            )
-                            val intent = Intent(this, WaitActivity::class.java)
-                            startActivity(intent)
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success")
-                        } else {
+                                val intent = Intent(this, WaitActivity::class.java)
+                                startActivity(intent)
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success")
+                            } else {
 
-                            val toast = "Failed to create user"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                                val toast = "Failed to create user"
+                                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
 
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                this, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                Toast.makeText(
+                                    this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
+                }else{
+                    makeToast("Connect to the internet before creating an account")
+                }
+
+
 
             }
     }
@@ -124,7 +139,7 @@ class CreateAccountActivity: AppCompatActivity() {
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?,) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
