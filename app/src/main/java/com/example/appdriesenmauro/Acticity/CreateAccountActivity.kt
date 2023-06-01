@@ -126,13 +126,17 @@ class CreateAccountActivity: AppCompatActivity() {
 
         if(requestCode == IMAGE_PICK_CODE) {
             val dataUri = data?.data
-            pfUser = MediaStore.Images.Media.getBitmap(contentResolver,dataUri)
-            binding.iVProfileFoto.setImageBitmap(pfUser)
+            if(dataUri != null){
+                pfUser = MediaStore.Images.Media.getBitmap(contentResolver,dataUri)
+                binding.iVProfileFoto.setImageBitmap(pfUser)
+            }
         }
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             pfUser = data?.extras?.get("data") as Bitmap
-            binding.iVProfileFoto.setImageBitmap(pfUser)
+            if(pfUser != null){
+                binding.iVProfileFoto.setImageBitmap(pfUser)
+            }
         }
     }
 

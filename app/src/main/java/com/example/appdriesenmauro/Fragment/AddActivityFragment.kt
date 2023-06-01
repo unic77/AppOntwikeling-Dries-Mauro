@@ -145,8 +145,10 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data2: Intent?) {
         //https://www.youtube.com/watch?v=gd300jxLEe0&ab_channel=AtifPervaiz
-        phEvent = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
-        binding.imageTopOfInfoPage.setImageBitmap(phEvent)
+        if(data2 != null){
+            phEvent = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, data2!!.data)
+            binding.imageTopOfInfoPage.setImageBitmap(phEvent)
+        }
     }
 
     companion object{
