@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appdriesenmauro.databinding.ActivityCreateAccountBinding
 import com.google.android.gms.tasks.Continuation
@@ -59,31 +58,32 @@ class CreateAccountActivity: AppCompatActivity() {
 
         binding.btnCreatAccount.setOnClickListener {
 
-            val email = binding.Txtemail.text.toString()
-            val password = binding.txtPassword.text.toString()
-            if (pfUser == null) {
-                makeToast("pick a photo")
-            } else if (TextUtils.isEmpty(email)) {
-                makeToast("enter an email address")
-            } else if (TextUtils.isEmpty(password)) {
-                makeToast("enter an password address")
-
-            } else if (password.count() < 6) {
-                makeToast("password must be more than 6 letters")
-            }
-
             val connManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
             val wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             val mobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+            val email = binding.Txtemail.text.toString()
+            val password = binding.txtPassword.text.toString()
 
-            if (wifi!!.isConnected || mobile!!.isConnected) {
-
+            if (pfUser == null) {
+                makeToast("pick a photo")
+            }
+            else if (TextUtils.isEmpty(email)) {
+                makeToast("enter an email address")
+            }
+            else if (TextUtils.isEmpty(password)) {
+                makeToast("enter an password address")
+            }
+            else if (password.count() < 6) {
+                makeToast("password must be more than 6 letters")
+            }
+            else if (!wifi!!.isConnected || !mobile!!.isConnected) {
+                makeToast("Connect to the internet before creating an account")
+            }
+            else {
                 //wifi of data connected
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            val toast = "User successfully created"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
                             uploadProfileImage(
                                 Uri.parse(
                                     MediaStore.Images.Media.insertImage(
@@ -92,30 +92,23 @@ class CreateAccountActivity: AppCompatActivity() {
                                         mAuth.currentUser?.uid,
                                         null
                                     )
-                                )
+                                ),
+                                mAuth
                             )
                             val intent = Intent(this, WaitActivity::class.java)
                             startActivity(intent)
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
                         } else {
-
-                            val toast = "Failed to create user"
-                            Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                this, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            makeToast("Authentication failed.")
                         }
                     }
-            } else {
-                makeToast("Connect to the internet before creating an account")
             }
         }
     }
+
 
     private fun takeImage(){
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -153,7 +146,7 @@ class CreateAccountActivity: AppCompatActivity() {
         Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun uploadProfileImage(photo: Uri){
+    private fun uploadProfileImage(photo: Uri,mAuth: FirebaseAuth){
         val filRef = FStorage.child(mAuth.currentUser?.uid + ".jpg")
         val uploadTask = filRef.putFile(photo)
 

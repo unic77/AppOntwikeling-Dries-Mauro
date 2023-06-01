@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">event-planner</string>
-    <string name="close_menu">iets</string>
-    <string name="open_menu">heey</string>
+    <string name="APP_NAME">event-planner</string>
+    <string name="close_menu">close</string>
+    <string name="open_menu">open</string>
     <string name="dialog_remove" />
     <string name="dialog_do_you_want_to_remove" />
     <string name="dialog_cancel" />

@@ -20,8 +20,7 @@ class UserActivity: AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         mAuth = Firebase.auth
-        val currentUser = mAuth.currentUser
-        if(currentUser != null){
+        if(mAuth.currentUser != null){
            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -41,30 +40,24 @@ class UserActivity: AppCompatActivity() {
             val password = binding.Passporttxt.text.toString()
 
             if (TextUtils.isEmpty(email)){
-                val toast = "enter an email address"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "enter an email address", Snackbar.LENGTH_SHORT).show()
             }
-
-            if (TextUtils.isEmpty(password)){
-                val toast = "enter a password"
-                Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+            else if (TextUtils.isEmpty(password)){
+                Snackbar.make(binding.root, "enter a password", Snackbar.LENGTH_SHORT).show()
             }
+            else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Snackbar.make(binding.root, "User successfully logged in", Snackbar.LENGTH_SHORT).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val toast = "User successfully logged in"
-                        Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-
-                    } else {
-                        val toast = "Failed, make sure that email and password is correct"
-                        Snackbar.make(binding.root, toast, Snackbar.LENGTH_SHORT).show()
+                        } else {
+                            Snackbar.make(binding.root, "Failed, make sure that email and password is correct", Snackbar.LENGTH_SHORT).show()
+                        }
                     }
-                }
-
-
+            }
         }
 
         binding.txtViewVergotPassword.setOnClickListener{

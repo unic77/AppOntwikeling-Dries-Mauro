@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,11 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         val mAuth = FirebaseAuth.getInstance()
 
-        var userPfp: Bitmap?
-
         val headerView : View = binding.navView.getHeaderView(0)
-
-        val navMenu = binding.navView.menu
 
         val pfBinding = headerView.findViewById<ImageView>(R.id.profileFoto)
         val emailBinding = headerView.findViewById<TextView>(R.id.txtVNameUser)
@@ -74,31 +71,29 @@ class MainActivity : AppCompatActivity() {
             val localFile = File.createTempFile(mAuth.currentUser!!.uid, ".jpg")
             val pathReference =
                 storage.getReference("profilePic/" + mAuth.currentUser!!.uid + ".jpg")
-            userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
-            pfBinding.setImageBitmap(userPfp)
 
             emailBinding.text = mAuth.currentUser?.email
 
-            user = User(mAuth.currentUser!!.uid, userPfp)
-            activityFragment = ActivityFragment()
-
             pathReference.getFile(localFile).addOnSuccessListener {
-                userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
+                val userPfp = BitmapFactory.decodeFile(localFile.absolutePath)
                 pfBinding.setImageBitmap(userPfp)
                 localFile.delete()
                 user = User(mAuth.currentUser!!.uid, userPfp)
 
+                val broadcastInent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(localFile))
+                this.applicationContext.sendBroadcast(broadcastInent)
+
                 setup()
             }.addOnFailureListener {
                 mAuth.signOut()
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, UserActivity::class.java)
                 startActivity(intent)
             }
         }
         else{
             logOutButton.text = "log in"
             setup()
-            val mnuAddActivity = navMenu.findItem(R.id.mnuAddActivity)
+            val mnuAddActivity = binding.navView.menu.findItem(R.id.mnuAddActivity)
             mnuAddActivity.isVisible = false
         }
     }

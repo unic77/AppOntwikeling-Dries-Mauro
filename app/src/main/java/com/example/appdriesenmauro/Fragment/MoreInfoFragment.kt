@@ -18,7 +18,6 @@ class MoreInfoFragment(
     private var activityFragment: ActivityFragment,
     private val mainActivity: MainActivity
 ) : Fragment(R.layout.fragement_activity_info){
-    private lateinit var binding : FragementActivityInfoBinding
     private lateinit var builder : AlertDialog.Builder
     private lateinit var mAuth: FirebaseAuth;
 
@@ -28,8 +27,7 @@ class MoreInfoFragment(
         savedInstanceState: Bundle?
     ): View? {
         mAuth = FirebaseAuth.getInstance()
-        binding = FragementActivityInfoBinding.inflate(layoutInflater)
-        //i
+         val binding = FragementActivityInfoBinding.inflate(layoutInflater)
         if( mAuth.currentUser?.uid == activity.postedUser) {
             binding.btnRemove.visibility = View.VISIBLE
         }

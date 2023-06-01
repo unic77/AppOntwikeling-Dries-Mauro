@@ -41,9 +41,6 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
     private lateinit var binding: ActivityAddactivityBinding
     private var activityFragment = activityFragmentIn
     private var phEvent: Bitmap? = null
-    private lateinit var date: String
-    private var userId = user.user_ID
-    private lateinit var mAuth: FirebaseAuth
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -54,17 +51,19 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
     ): View {
         binding = ActivityAddactivityBinding.inflate(layoutInflater)
 
-        mAuth = FirebaseAuth.getInstance()
+        val mAuth = FirebaseAuth.getInstance()
 
         binding.btnAddImage.setOnClickListener{
             pickImage()
         }
 
+        val userId = user.user_ID
+
         //https://www.youtube.com/watch?v=fj-4x2X9Lew&ab_channel=ProgrammingGuru
         val picker = binding.eventDatePicker
         val today = Calendar.getInstance()
 
-        date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
+        var date = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH)+1}/${today.get(Calendar.YEAR)}"
 
         picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)){
                 view, year, month, day ->
@@ -152,6 +151,5 @@ class AddActivityFragment(activityFragmentIn: ActivityFragment, private var main
 
     companion object{
         private val IMAGE_PICK_CODE = 1000
-        private val STORAGE_REQUEST_CODE = 101
     }
 }

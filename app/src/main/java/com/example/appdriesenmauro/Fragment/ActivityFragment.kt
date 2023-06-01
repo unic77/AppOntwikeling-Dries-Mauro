@@ -17,13 +17,12 @@ import kotlin.collections.ArrayList
 
 class ActivityFragment() : Fragment(R.layout.fragment_activity) {
 
-    private lateinit var binding : FragmentActivityBinding
     private var sampleActivityItems = ArrayList<Activity>()
     private var favoriteActivityItems = ArrayList<Activity>()
     private lateinit var adapter: ActivityAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentActivityBinding.inflate(layoutInflater)
+        val binding = FragmentActivityBinding.inflate(layoutInflater)
         val main = activity as MainActivity
         adapter = ActivityAdapter(sampleActivityItems,this,main)
         binding.rvwAcivity.adapter = adapter
@@ -86,8 +85,6 @@ class ActivityFragment() : Fragment(R.layout.fragment_activity) {
         }
         if (filteredlist.isEmpty()) {
             adapter.filterList(filteredlist)
-            /*val toast = "no event found with that name"
-            Snackbar.make(binding.root,toast, Snackbar.LENGTH_SHORT).show()*/
         } else {
             adapter.filterList(filteredlist)
         }
