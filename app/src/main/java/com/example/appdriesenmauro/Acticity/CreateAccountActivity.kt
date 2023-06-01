@@ -76,7 +76,7 @@ class CreateAccountActivity: AppCompatActivity() {
             else if (password.count() < 6) {
                 makeToast("password must be more than 6 letters")
             }
-            else if (!wifi!!.isConnected || !mobile!!.isConnected) {
+            else if (!wifi!!.isConnected && !mobile!!.isConnected) {
                 makeToast("Connect to the internet before creating an account")
             }
             else {

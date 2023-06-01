@@ -1,6 +1,7 @@
 package com.example.appdriesenmauro.Acticity
 
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,9 @@ class UserActivity: AppCompatActivity() {
 
         binding.loginBtn.setOnClickListener{
 
+            val connManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+            val wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+            val mobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
             val email = binding.emailadress.text.toString()
             val password = binding.Passporttxt.text.toString()
 
@@ -44,6 +48,9 @@ class UserActivity: AppCompatActivity() {
             }
             else if (TextUtils.isEmpty(password)){
                 Snackbar.make(binding.root, "enter a password", Snackbar.LENGTH_SHORT).show()
+            }
+            else if(!wifi!!.isConnected && !mobile!!.isConnected){
+                Snackbar.make(binding.root, "Connect to the internet before creating an account", Snackbar.LENGTH_SHORT).show()
             }
             else {
                 mAuth.signInWithEmailAndPassword(email, password)
